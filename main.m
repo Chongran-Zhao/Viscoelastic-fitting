@@ -8,17 +8,14 @@ stress = data{1}';
 strain = data{2}';
 time_list = data{3}';
 
-% Ft = zeros(3,3,length(strain));
-% Ft(1,1,:) = strain(:);
-% Ft(2,2,:) = (strain(:)).^(-0.5);
-% Ft(3,3,:) = (strain(:)).^(-0.5);
-Ft = zeros(3,3,length(time_list));
+Ft = zeros(3,3,length(strain));
 Ft(1,1,:) = strain(:);
 Ft(2,2,:) = strain(:).^(-0.5);
 Ft(3,3,:) = strain(:).^(-0.5);
+
 time = time_list;
 
-xi_eq_0 =  [1.0, 1.0];
+xi_eq_0 =  [2.0, 2.0];
 xi_neq_0 = [1.0, 1.0];
 eta_0 = 1.0;
 
@@ -37,14 +34,17 @@ ub = [Inf, Inf, Inf, Inf, Inf];
 xi_eq = paras(1:2);
 xi_neq = paras(3:4);
 eta = paras(end);
-
+disp(paras)
 P1_list = get_P1_list(xi_eq, xi_neq, eta, Ft, time);
-P_list = get_P_list(xi_eq, xi_neq, eta, Ft, time);
 % P1_eq_list = get_P1_eq_list(xi_eq, Ft);
-
+be_t = get_be_t(time, xi_neq_0, eta_0, Ft);
+% P1_neq_list = get_P1_neq_list(xi_eq, Ft, be_t);
+% tau_neq = get_tau_neq(xi_neq_0, be_t(:,:,1));
+% aa = get_S_neq(xi_neq_0, be_t(:,:,1), Ft(:,:,1)) + get_S_eq(xi_eq_0, Ft(:,:,1));
 plot(strain, stress, 'o', Color='r');
 hold on
 plot(strain, P1_list, '-', Color='r');
+
 
 % xi_eq is 2x1 array
 % lambda is a scalar
@@ -73,7 +73,6 @@ eig_val_S_eq = [eq_dPsi_dlambda(xi_eq, lambda1) / lambda1;...
                 eq_dPsi_dlambda(xi_eq, lambda3) / lambda3];
 out = tensor_product(V, eig_val_S_eq);
 end
-
 % xi_neq is a 6x1 array
 % F is a 3x3 matrix
 % out is a 3x3 matrix
@@ -181,7 +180,7 @@ end
 % xi_neq is 6x1 array
 % time is size of length of data
 % out is same size of Ft
-function out = get_be(time, xi_neq, eta, Ft)
+function out = get_be_t(time, xi_neq, eta, Ft)
 out = zeros(size(Ft));
 for ii = 1:size(out, 3)
     if (ii==1)
@@ -283,14 +282,12 @@ for ii=1:length(out)
     P_eq = get_P_eq(xi_eq, Ft(:,:,ii));
     P_neq = get_P_neq(xi_neq, Ft(:,:,ii), be_t(:,:,ii));
     out(ii) = (P_eq(2,2) + P_neq(2,2)) / F_inv_transpose(2,2);
-    if abs((P_eq(2,2) + P_neq(2,2)) / F_inv_transpose(2,2) - (P_eq(3,3) + P_neq(3,3)) / F_inv_transpose(3,3)) < 1e-6
+    if abs((P_eq(2,2) + P_neq(2,2)) / F_inv_transpose(2,2) - (P_eq(3,3) + P_neq(3,3)) / F_inv_transpose(3,3)) < 1e-10
         out(ii) = (P_eq(2,2) + P_neq(2,2)) / F_inv_transpose(2,2);
     else
         format long
-        disp(xi_neq);
-        disp(F_inv_transpose);
+        disp((P_eq(2,2) + P_neq(2,2)) / F_inv_transpose(2,2));
         disp((P_eq(3,3) + P_neq(3,3)) / F_inv_transpose(3,3));
-        disp(get_tau_neq(xi_neq,be_t(:,:,ii)));
         error("ERROR: solve_p_list is wrong!");
     end
 end
@@ -298,7 +295,7 @@ end
 
 function out = get_P_list(xi_eq, xi_neq, eta, Ft, time)
 out = zeros(size(Ft));
-be = get_be(time, xi_neq, eta, Ft);
+be = get_be_t(time, xi_neq, eta, Ft);
 p = solve_p_list(xi_eq, xi_neq, Ft, be);
 P_eq_list = get_P_eq_list(xi_eq, Ft);
 P_neq_list = get_P_neq_list(xi_neq, Ft, be);
@@ -313,17 +310,12 @@ P_list = get_P_list(xi_eq, xi_neq, eta, Ft, time);
 out(:) = P_list(1,1,:);
 end
 
-function out = objective(paras, Ft, time, P1_exp)
-xi_eq = paras(1:2);
-xi_neq = paras(3:4);
+function out = objective(paras, Ft, P1_exp, time)
+xi_eq = [paras(1), paras(2)];
+xi_neq =[paras(3), paras(4)];
 eta = paras(end);
-% disp(get_be(time, xi_neq, eta, Ft));
 P1_list = get_P1_list(xi_eq, xi_neq, eta, Ft, time);
-% out = zeros(length(time), 1);
-% for ii=1:length(out)
-out = (P1_list - P1_exp);
-% end
-
+out = (P1_exp - P1_list);
 end
 
 % generate the fourth-order viscosity tensor
