@@ -1,34 +1,46 @@
 clc; clear; close all
 
-fid = fopen('data_0d6.txt', 'r');
+fid = fopen('./data/data_1.txt', 'r');
 data = textscan(fid, '%f %f %f', 'Delimiter', '\n');
 fclose(fid);
 
 stress = data{1}';
 strain = data{2}';
-time = data{3}';
+time_list = data{3}';
 
-Ft = zeros(3,3,length(strain));
+% Ft = zeros(3,3,length(strain));
+% Ft(1,1,:) = strain(:);
+% Ft(2,2,:) = (strain(:)).^(-0.5);
+% Ft(3,3,:) = (strain(:)).^(-0.5);
+Ft = zeros(3,3,length(time_list));
 Ft(1,1,:) = strain(:);
-Ft(2,2,:) = (strain(:)).^(-0.5);
-Ft(3,3,:) = (strain(:)).^(-0.5);
+Ft(2,2,:) = strain(:).^(-0.5);
+Ft(3,3,:) = strain(:).^(-0.5);
+time = time_list;
 
-xi_eq_0 =  [2.0, 2.0];
-xi_neq_0 = [1.0, 2.0];
-eta_0 = 1;
+xi_eq_0 =  [1.0, 1.0];
+xi_neq_0 = [1.0, 1.0];
+eta_0 = 1.0;
 
 paras0 = [xi_eq_0, xi_neq_0, eta_0];
 objectiveFunction = @(paras) objective(paras, Ft, stress, time);
-options = optimoptions('lsqnonlin', 'Algorithm', 'interior-point', 'MaxIterations', 5000);
+options = optimoptions('lsqnonlin', ...
+    'Algorithm', 'interior-point', ...
+    'MaxIterations', 5000, ...
+    'Display', 'iter');
+
+lb = [0.0, 0.0, 0.0, 0.0, 0.0];
+ub = [Inf, Inf, Inf, Inf, Inf];
 % lb = [ 0.0, 0.0, 0.0, 0.0, -Inf, -Inf, -Inf, -Inf, -Inf, -Inf, -Inf, -Inf, 0.0];
 % ub = [ Inf, Inf, Inf, Inf,  Inf,  Inf,  Inf,  Inf,  Inf,  Inf,  Inf,  Inf, Inf];
-[paras, ~] = lsqnonlin( objectiveFunction, paras0, [], [], options);
-xi_eq = paras(1:2)
-xi_neq = paras(3:4)
-eta = paras(end)
-be = get_be(time, xi_neq, eta, Ft);
-P1_list = get_P1_list(xi_eq, xi_neq, Ft, be);
-P1_eq_list = get_P1_eq_list(xi_eq, Ft);
+[paras, ~] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
+xi_eq = paras(1:2);
+xi_neq = paras(3:4);
+eta = paras(end);
+
+P1_list = get_P1_list(xi_eq, xi_neq, eta, Ft, time);
+P_list = get_P_list(xi_eq, xi_neq, eta, Ft, time);
+% P1_eq_list = get_P1_eq_list(xi_eq, Ft);
 
 plot(strain, stress, 'o', Color='r');
 hold on
@@ -125,7 +137,7 @@ end
 function out = get_P_neq_list(xi_neq, Ft, be_t)
 out = zeros(size(Ft));
 for ii=1:size(Ft, 3)
-out(:,:,ii) = F * get_P_neq(xi_neq, Ft(:,:,ii), be_t(:,:,ii));
+out(:,:,ii) = get_P_neq(xi_neq, Ft(:,:,ii), be_t(:,:,ii));
 end
 end
 
@@ -284,28 +296,33 @@ for ii=1:length(out)
 end
 end
 
-function out = get_P1_list(xi_eq, xi_neq, Ft, be)
-out = zeros(size(Ft, 3), 1);
+function out = get_P_list(xi_eq, xi_neq, eta, Ft, time)
+out = zeros(size(Ft));
+be = get_be(time, xi_neq, eta, Ft);
 p = solve_p_list(xi_eq, xi_neq, Ft, be);
-for ii=1:length(out)
-    P_eq = get_P_eq(xi_eq, Ft(:,:,ii));
-    P_neq = get_P_neq(xi_neq, Ft(:,:,ii), be(:,:,ii));
+P_eq_list = get_P_eq_list(xi_eq, Ft);
+P_neq_list = get_P_neq_list(xi_neq, Ft, be);
+for ii = 1:length(time)
     F_inv_transpose = inv(transpose(Ft(:,:,ii)));
-    out(ii) = out(ii) + P_eq(1,1) + P_neq(1,1) - p(ii)*F_inv_transpose(1,1);
+    out(:,:,ii) = P_eq_list(:,:,ii) + P_neq_list(:,:,ii) - p(ii).*F_inv_transpose;
 end
+end
+
+function out = get_P1_list(xi_eq, xi_neq, eta, Ft, time)
+P_list = get_P_list(xi_eq, xi_neq, eta, Ft, time);
+out(:) = P_list(1,1,:);
 end
 
 function out = objective(paras, Ft, time, P1_exp)
 xi_eq = paras(1:2);
 xi_neq = paras(3:4);
 eta = paras(end);
-be = get_be(time, xi_neq, eta, Ft);
-P1_list = get_P1_list(xi_eq, xi_neq, Ft, be);
+% disp(get_be(time, xi_neq, eta, Ft));
+P1_list = get_P1_list(xi_eq, xi_neq, eta, Ft, time);
 % out = zeros(length(time), 1);
 % for ii=1:length(out)
-out = abs(P1_list - P1_exp)
+out = (P1_list - P1_exp);
 % end
-disp(out);
 
 end
 
