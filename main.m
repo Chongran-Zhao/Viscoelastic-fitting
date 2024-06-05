@@ -19,8 +19,8 @@ Ft(3,3,:) = lambda1_exp(:).^(-0.5);
 % The length of mu_eq and alpha_eq should be the same
 % mu_eq = [mu1_eq, mu2_eq]
 % alpha_eq = [alpha1_eq, alpha2_eq]
-mu_eq = [1.0, 1.0];
-alpha_eq = [1.0, 1.0];
+mu_eq = [1.0, 1.0, 1.0];
+alpha_eq = [1.0, 1.0, 1.0];
 
 % The size of mu_neq and alpha_neq should be same
 % The length of eta and the row number of mu_neq and alpha_neq should be same
@@ -31,17 +31,16 @@ alpha_eq = [1.0, 1.0];
 %              alpha1_neq2, alpha2_neq2]
 
 eta = [1.0, 1.0];
-mu_neq = [1.0, 1.0;...
-          1.0, 1.0];
-alpha_neq = [1.0, 1.0;...
-             1.0, 1.0];
-
+mu_neq = [1.0, 1.0, 1.0;...
+          1.0, 1.0, 1.0];
+alpha_neq = [1.0, 1.0, 1.0;...
+             1.0, 1.0, 1.0];
 
 [paras0, lb, ub, num_eq, num_neq, num_rel] = array_to_paras(mu_eq, alpha_eq, eta, mu_neq, alpha_neq);
 
 objectiveFunction = @(paras) objective(paras, Ft, P1_exp, time, num_eq, num_neq, num_rel);
 options = optimoptions('lsqnonlin', ...
-    'Algorithm', 'interior-point', ...
+    'Algorithm', 'levenberg-marquardt', ...
     'MaxIterations', 1000, ...
     'Display', 'iter');
 

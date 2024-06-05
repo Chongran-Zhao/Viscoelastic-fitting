@@ -8,8 +8,8 @@ P_iso_eq_list = get_P_iso_eq_list(mu_eq, alpha_eq, Ft);
 P_iso_neq_list_multi_relax = zeros(3, 3, size(Ft,3), length(eta_list));
 out = P_iso_eq_list;
 for ii = 1:length(eta_list)
-    be_t = get_be_t(time, mu_neq_list(ii,:), alpha_neq_list(ii,:), eta_list(ii), Ft);
-    P_iso_neq_list_multi_relax(:,:,:,ii) = get_P_iso_neq_list(mu_neq_list(ii,:), alpha_neq_list(ii,:), Ft, be_t);
+    be_t = get_be_t(time, mu_neq_list(:,ii), alpha_neq_list(:,ii), eta_list(ii), Ft);
+    P_iso_neq_list_multi_relax(:,:,:,ii) = get_P_iso_neq_list(mu_neq_list(:,ii), alpha_neq_list(:,ii), Ft, be_t);
     out = out + P_iso_neq_list_multi_relax(:,:,:,ii);
 end
 % determine the pressure through incompressbility constrain
