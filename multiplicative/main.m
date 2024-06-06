@@ -2,7 +2,7 @@ clc; clear; close all
 
 addpath("src");
 
-fid = fopen('./exp_data_UT/data_1.txt', 'r');
+fid = fopen('../exp_data_UT/data_1.txt', 'r');
 data = textscan(fid, '%f %f %f', 'Delimiter', '\n');
 fclose(fid);
 
@@ -40,7 +40,7 @@ alpha_neq = [1.0, 1.0, 1.0;...
 
 objectiveFunction = @(paras) objective(paras, Ft, P1_exp, time, num_eq, num_neq, num_rel);
 options = optimoptions('lsqnonlin', ...
-    'Algorithm', 'levenberg-marquardt', ...
+    'Algorithm', 'interior-point', ...
     'MaxIterations', 1000, ...
     'Display', 'iter');
 
