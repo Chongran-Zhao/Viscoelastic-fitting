@@ -12,7 +12,10 @@ time = data{3}';
 
 % Uniaxial tension experimental case
 Ft = zeros(3,3,1);
-Ft(1,1,1) = lambda1_exp(:);
-Ft(2,2,1) = lambda1_exp(:).^(-0.5);
-Ft(3,3,1) = lambda1_exp(:).^(-0.5);
+Ft(1,1,1) = lambda1_exp(1);
+Ft(2,2,1) = lambda1_exp(1).^(-0.5);
+Ft(3,3,1) = lambda1_exp(1).^(-0.5);
+
+out = get_S(1.0, 1.0, 1.0, Ft(:,:,1))
+
 
