@@ -1,4 +1,4 @@
-function out = cross_otimes_3d_to_6d(M1, M2, M3)
+function out = cross_otimes_2d_to_6d(M1, M2, M3)
 out = zeros(3,3,3,3,3,3);
 for ii = 1:3
     for jj = 1:3

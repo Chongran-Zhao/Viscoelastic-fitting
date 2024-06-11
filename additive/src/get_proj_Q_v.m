@@ -27,7 +27,7 @@ else
 end
 theta(2,1) = theta(1,2);
 theta(3,2) = theta(2,3);
-theta(3,1) = theta(1,3);
+theta(1,3) = theta(3,1);
 
 out = zeros(3,3,3,3);
 for ii = 1:3
