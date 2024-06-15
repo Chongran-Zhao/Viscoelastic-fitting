@@ -1,9 +1,8 @@
 % The function is used to obtain six-order projection tensor L
 % refer to eqn. 2.11 of Liu, Guan, Zhao & Luo 2024 preprint
-function out = get_proj_L(m, n, F)
+function out = get_proj_L(m, n, Gamma)
 out = zeros(3,3,3,3,3,3);
-C = transpose(F) * F;
-[V, D] = eig(C);
+[V, D] = eig(Gamma);
 lambda = [sqrt(D(1,1)); sqrt(D(2,2)); sqrt(D(3,3))];
 
 N1 = V(:,1);

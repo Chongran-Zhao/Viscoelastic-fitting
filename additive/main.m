@@ -19,7 +19,7 @@ Ft(3,3,:) = lambda1_exp(:).^(-0.5);
 % parameters
 mu = 1.0;
 m = 1.0;
-n = 1.0;
+n = 2.0;
 eta_d = 1.0;
-out = get_Gamma_t(mu, m, n, eta_d, Ft, time)
+out = get_Gamma_t(mu, m, n, eta_d, Ft, time);
 

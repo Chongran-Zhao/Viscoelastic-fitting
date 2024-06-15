@@ -87,9 +87,9 @@ alpha_eq = [1.0];
 % alpha_neq = [alpha1_neq1, alpha2_neq1;
 %              alpha1_neq2, alpha2_neq2]
 
-eta = [1.0, 1.0, 1.0];
-mu_neq = [1.0; 1.0; 1.0];
-alpha_neq = [1.0; 1.0; 1.0];
+eta = [1.0];
+mu_neq = [1.0];
+alpha_neq = [1.0];
 
 [paras0, lb, ub, num_eq, num_neq, num_rel] = array_to_paras(mu_eq, alpha_eq, eta, mu_neq, alpha_neq);
 
