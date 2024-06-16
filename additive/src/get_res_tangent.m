@@ -1,6 +1,6 @@
 % refer to Local Newton-Raphson iteration box of Liu, Guan, Zhao & Luo 2024 preprint
 function out = get_res_tangent(mu_neq, m_neq, n_neq, eta_d, F_mid, Gamma_old, Gamma_new, dt)
-out = get_sym_idn_4d();
+out = get_idn_4d();
 C_mid = transpose(F_mid) * F_mid;
 Gamma_mid = 0.5 .* (Gamma_old + Gamma_new);
 Q_proj = get_proj_Q_neq(m_neq, n_neq, Gamma_mid);
