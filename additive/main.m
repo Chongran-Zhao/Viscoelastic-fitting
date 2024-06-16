@@ -17,9 +17,24 @@ Ft(2,2,:) = lambda1_exp(:).^(-0.5);
 Ft(3,3,:) = lambda1_exp(:).^(-0.5);
 
 % parameters
-mu = 1.0;
-m = 1.0;
-n = 2.0;
-eta_d = 1.0;
-out = get_Gamma_t(mu, m, n, eta_d, Ft, time);
+mu_eq = [1.0];
+m_eq = [1.0];
+n_eq = [1.0];
 
+mu_neq = [1.0];
+m_neq = [1.0];
+n_neq = [1.0];
+
+
+eta_d = [1.0];
+
+[paras0, num_eq, num_neq, lb, ub] = array_to_paras(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d);
+
+objectiveFunction = @(paras) objective(paras, Ft, P1_exp, time, num_eq, num_neq);
+options = optimoptions('lsqnonlin', ...
+    'Algorithm', 'interior-point', ...
+    'MaxIterations', 1000, ...
+    'Display', 'iter-detailed');
+
+[paras, resnorm] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
+plot_result(paras, num_eq, num_neq, Ft, time, lambda1_exp, P1_exp);

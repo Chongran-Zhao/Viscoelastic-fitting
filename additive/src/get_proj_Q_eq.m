@@ -1,5 +1,5 @@
 % refer to eqn. 2.8 of Liu, Guan, Zhao & Luo 2024 preprint
-function out = get_proj_Q(m, n, F)
+function out = get_proj_Q_eq(m_eq, n_eq, F)
 C = transpose(F) * F;
 [V, D] = eig(C);
 M = zeros(3,3,3);
@@ -8,8 +8,8 @@ M(:,:,2) = kron(V(:,2), V(:,2)');
 M(:,:,3) = kron(V(:,3), V(:,3)');
 
 lambda = [sqrt(D(1,1)); sqrt(D(2,2)); sqrt(D(3,3))];
-eig_val_E = get_CR_eig_val(m, n, lambda);
-d = get_CR_eig_val_der(m, n, lambda) ./ lambda;
+eig_val_E = get_CR_eig_val(m_eq, n_eq, lambda);
+d = get_CR_eig_val_der(m_eq, n_eq, lambda) ./ lambda;
 theta = zeros(3,3);
 if lambda(1) == lambda(2)
     theta(1,2) = d(1); 
