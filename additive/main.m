@@ -36,3 +36,4 @@ options = optimoptions('lsqnonlin', ...
 
 [paras, resnorm] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
 plot_result(paras, num_eq, num_neq, Ft, time, lambda1_exp, P1_exp);
+print(gcf, '-dpdf', 'fig_1.pdf');

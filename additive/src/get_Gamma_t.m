@@ -18,9 +18,9 @@ for ii = 1:length(time)
     end
     F_mid = 0.5 .* (F_old + F_new);
     while error > 1e-6 && counter < 10
-        tangent = convert_4d_to_2d(get_res_tangent(mu_neq, m_neq, n_neq, eta_d, F_mid, Gamma_old, Gamma_new, dt));
-        residual = convert_2d_to_1d(get_res(mu_neq, m_neq, n_neq, eta_d, F_mid, Gamma_old, Gamma_new, dt));
-        incremental = convert_1d_to_2d(bicgstab(tangent, -residual));
+        tangent = (convert_4d_to_2d(get_res_tangent(mu_neq, m_neq, n_neq, eta_d, F_mid, Gamma_old, Gamma_new, dt)));
+        residual = (convert_2d_to_1d(get_res(mu_neq, m_neq, n_neq, eta_d, F_mid, Gamma_old, Gamma_new, dt)));
+        incremental = (convert_1d_to_2d(bicgstab(tangent, -residual)));
         Gamma_new = Gamma_new + incremental;
         counter = counter + 1;
         error = norm(residual);

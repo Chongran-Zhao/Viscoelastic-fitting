@@ -2,7 +2,7 @@
 % lambda is one scalar
 % output is one scalar
 
-function out = eq_dPsi_dlambda(mu_eq, alpha_eq, lambda)
+function out = Ogden_dPsi_dlambda_eq(mu_eq, alpha_eq, lambda)
 if length(mu_eq) == length(alpha_eq)
     for ii = 1:length(mu_eq)
         out = mu_eq(ii) * lambda^( alpha_eq(ii)-1.0 );
