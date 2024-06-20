@@ -4,7 +4,7 @@
 % out is the elastic left-Cauchy Green strain tensor list during the total loading case
 % refer to table 1 of Reese & Gocindjee 1998 IJSS
 
-function out = get_be_t(time, xi_neq, eta_d, Ft)
+function out = get_be_t(time, mu_neq, alpha_neq, eta, Ft)
 out = zeros(size(Ft));
 for ii = 1:size(out, 3)
     if (ii==1)
@@ -30,11 +30,11 @@ for ii = 1:size(out, 3)
     eig_val_eps_trial = 0.5 .* log(eig_val_be_trial);
 
     while (error > tol) && (counter < max_it_num)
-        residual = get_res(eig_val_be, eig_val_eps, eig_val_eps_trial, xi_neq, dt, eta_d);
-        tangent = get_res_tangent(eig_val_be, xi_neq, dt, eta_d);
+        residual = get_res(eig_val_be, eig_val_eps, eig_val_eps_trial, mu_neq, alpha_neq, dt, eta);
+        tangent = get_res_tangent(eig_val_be, mu_neq, alpha_neq, dt, eta);
 
-        delta_epsilon = bicgstab(tangent, -residual);
-
+        delta_epsilon = tangent \ (-residual);
+        % delta_epsilon = bicgstab(tangent, -residual);
         eig_val_eps = eig_val_eps + delta_epsilon;
         error = norm(residual);
         eig_val_be = exp(2.0 .* eig_val_eps);

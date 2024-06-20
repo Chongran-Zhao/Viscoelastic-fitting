@@ -10,10 +10,10 @@ out = P_iso_eq_list;
     P_iso_neq_list = get_P_iso_neq_list(xi_neq, Ft, be_t);
     out = out + P_iso_neq_list;
 % determine the pressure through incompressbility constrain
-for ii = 1:length(time)
-    F_inv_transpose = inv(transpose(Ft(:,:,ii)));
-    p = out(2,2,ii) / F_inv_transpose(2,2);
-    out(:,:,ii) = out(:,:,ii) - p.*F_inv_transpose;
-end
+% for ii = 1:length(time)
+%     F_inv_transpose = inv(transpose(Ft(:,:,ii)));
+%     p = out(2,2,ii) / F_inv_transpose(2,2);
+%     out(:,:,ii) = out(:,:,ii) - p.*F_inv_transpose;
+% end
 end
 % EOF

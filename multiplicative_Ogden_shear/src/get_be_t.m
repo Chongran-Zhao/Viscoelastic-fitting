@@ -33,8 +33,8 @@ for ii = 1:size(out, 3)
         residual = get_res(eig_val_be, eig_val_eps, eig_val_eps_trial, mu_neq, alpha_neq, dt, eta);
         tangent = get_res_tangent(eig_val_be, mu_neq, alpha_neq, dt, eta);
 
-        delta_epsilon = tangent \ (-residual);
-
+        % delta_epsilon = tangent \ (-residual);
+        delta_epsilon = bicgstab(tangent, -residual);
         eig_val_eps = eig_val_eps + delta_epsilon;
         error = norm(residual);
         eig_val_be = exp(2.0 .* eig_val_eps);
