@@ -31,9 +31,9 @@ for ii = 1:size(out, 3)
 
     while (error > tol) && (counter < max_it_num)
         residual = get_res(eig_val_be, eig_val_eps, eig_val_eps_trial, xi_neq, dt, eta_d);
-        tangent = get_res_tangent(eig_val_be, xi_neq, dt, eta_d);
+        tangent = real(get_res_tangent(eig_val_be, xi_neq, dt, eta_d));
 
-        delta_epsilon = bicgstab(tangent, -residual);
+        delta_epsilon = real(bicgstab(tangent, -residual));
 
         eig_val_eps = eig_val_eps + delta_epsilon;
         error = norm(residual);

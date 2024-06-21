@@ -19,7 +19,6 @@ Ft(3,3,:) = lambda1_exp(:).^(-0.5);
 xi_eq = [1.0, 1.0, 1.0];
 xi_neq = [1.0, 1.0, 1.0];
 eta_d = 1.0;
-out = get_be_t(time, xi_neq, eta_d, Ft)
 
 [paras0, lb, ub, num_eq, num_neq] = array_to_paras(xi_eq, xi_neq, eta_d);
 

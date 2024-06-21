@@ -3,8 +3,9 @@ num_eq = length(xi_eq);
 num_neq = length(xi_neq);
 
 num_paras = num_eq + num_neq + 1;
-lb = zeros(num_paras, 1);
+lb = -Inf(num_paras, 1);
 ub = Inf(num_paras, 1);
+lb(end) = 0.0;
 
 paras = [];
 paras = [paras, xi_eq];
