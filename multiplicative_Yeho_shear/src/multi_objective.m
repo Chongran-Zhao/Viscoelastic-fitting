@@ -9,15 +9,12 @@ P_shear_list_3 = get_P_ij_list(1, 2, xi_eq, xi_neq, eta_d, Ft_3, time_3);
 
 out = 0.0;
 for ii = 1:length(time_1)
-    % out = [out, (P_shear_list_1(ii) - P_exp_1(ii))/length(time_1)];
-    out = out + (P_shear_list_1(ii) - P_exp_1(ii))^2 / length(time_1);
+    out = [out, (P_shear_list_1(ii) - P_exp_1(ii))];
 end
 for ii = 1:length(time_2)
-    % out = [out, (P_shear_list_2(ii) - P_exp_2(ii))/length(time_2)];
-    out = out + (P_shear_list_2(ii) - P_exp_2(ii))^2 / length(time_2);
+    out = [out, (P_shear_list_2(ii) - P_exp_2(ii))];
 end
 for ii = 1:length(time_3)
-    % out = [out, (P_shear_list_3(ii) - P_exp_3(ii))/length(time_3)];
-    out = out + (P_shear_list_3(ii) - P_exp_3(ii))^2 / length(time_3);
+    out = [out, (P_shear_list_3(ii) - P_exp_3(ii))];
 end
 end

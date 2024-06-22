@@ -7,11 +7,9 @@ P_shear_list_2 = get_P_ij_list(1, 2, xi_eq, xi_neq, eta_d, Ft_2, time_2);
 
 out = [];
 for ii = 1:length(time_1)
-    % out = [out, (P_shear_list_1(ii) - P_exp_1(ii))/length(time_1)];
-    out = out + (P_shear_list_1(ii) - P_exp_1(ii))^2;
+    out = [out, (P_shear_list_1(ii) - P_exp_1(ii))];
 end
 for ii = 1:length(time_2)
-    % out = [out, (P_shear_list_2(ii) - P_exp_2(ii))/length(time_2)];
-    out = out + (P_shear_list_2(ii) - P_exp_2(ii))^2;
+    out = [out, (P_shear_list_2(ii) - P_exp_2(ii))];
 end
 end
