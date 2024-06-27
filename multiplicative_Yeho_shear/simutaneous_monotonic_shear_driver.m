@@ -42,7 +42,7 @@ Ft_3(1,2,:) = gamma_3(:);
 % xi_neq = [0.041, -0.009, 0.004];
 xi_eq = [1.0e-1, -1.0e-2, 1.0e-3];
 xi_neq = [1.0e-1, -1.0e-2, 1.0e-3];
-eta_d = 100.0;
+eta_d = 10.0;
 
 [paras0, lb, ub, num_eq, num_neq] = array_to_paras(xi_eq, xi_neq, eta_d);
 

@@ -9,8 +9,7 @@ sigma = zeros(size(out));
 % determine the pressure through incompressbility constrain
 for ii = 1:length(time)
     sigma(:,:,ii) = out(:,:,ii) * transpose(Ft(:,:,ii));
-
-    sigma(:,:,ii) = sigma(:,:,ii) - sigma(3,3,ii) .* ones(3,3);
+    sigma(:,:,ii) = sigma(:,:,ii) - sigma(3,3,ii) .* eye(3);
     out(:,:,ii) = sigma(:,:,ii) * inv(transpose(Ft(:,:,ii)));
 end
 end

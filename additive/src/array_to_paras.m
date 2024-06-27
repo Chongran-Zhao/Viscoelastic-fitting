@@ -19,6 +19,6 @@ end
 for ii = 1:num_neq
     paras = [paras, mu_neq(ii), m_neq(ii), n_neq(ii), eta_d(ii)];
 end
-lb = zeros(3*num_eq + 4*num_neq, 1);
+lb = -Inf(3*num_eq + 4*num_neq, 1);
 ub = inf(3*num_eq + 4*num_neq, 1);
 end

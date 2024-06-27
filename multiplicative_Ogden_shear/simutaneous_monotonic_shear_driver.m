@@ -51,9 +51,9 @@ alpha_eq = [1.0];
 % alpha_neq = [alpha1_neq1, alpha2_neq1;
 %              alpha1_neq2, alpha2_neq2]
 
-eta = [1.0, 1.0];
-mu_neq = [1.0, 1.0; 1.0, 1.0];
-alpha_neq = [1.0, 1.0; 1.0, 1.0];
+eta = [100.0, 1000.0];
+mu_neq = [1.0; 1.0];
+alpha_neq = [1.0; 1.0];
 
 % out = get_be_t(time, mu_neq, alpha_neq, eta, Ft)
 [paras0, lb, ub, num_eq, num_neq, num_rel] = array_to_paras(mu_eq, alpha_eq, eta, mu_neq, alpha_neq);
@@ -63,7 +63,7 @@ objectiveFunction = @(paras) multi_objective(paras, Ft_1, P_shear_exp1, time1,..
                                               num_eq, num_neq, num_rel);
 options = optimoptions('lsqnonlin', ...
     'Algorithm', 'interior-point', ...
-    'MaxIterations', 4000, ...
+    'MaxIterations', 1000, ...
     'Display', 'iter');
 
 [paras, ~] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
@@ -72,4 +72,4 @@ plot_results(paras, num_eq, num_neq, num_rel,...
                             Ft_1, gamma1, time1, P_shear_exp1,...
                             Ft_2, gamma2, time2, P_shear_exp2,...
                             Ft_3, gamma3, time3, P_shear_exp3);
-print(gcf, '-dpdf', 'shear_fig_sim_7.pdf');
+print(gcf, '-djpeg', 'fig_sim2.jpg');

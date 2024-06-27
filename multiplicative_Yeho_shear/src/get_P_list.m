@@ -5,13 +5,11 @@
 
 function out = get_P_list(xi_eq, xi_neq, eta_d, Ft, time)
 out = get_P_iso_list(xi_eq, xi_neq, eta_d, Ft, time);
-sigma = zeros(size(out));
 % determine the pressure through incompressbility constrain
 for ii = 1:length(time)
-    sigma(:,:,ii) = out(:,:,ii) * transpose(Ft(:,:,ii));
-
-    sigma(:,:,ii) = sigma(:,:,ii) - sigma(3,3,ii) .* ones(3,3);
-    out(:,:,ii) = sigma(:,:,ii) * inv(transpose(Ft(:,:,ii)));
+    sigma = out(:,:,ii) * transpose(Ft(:,:,ii));
+    sigma = sigma - sigma(3,3) .* eye(3);
+    out(:,:,ii) = sigma * inv(transpose(Ft(:,:,ii)));
 end
 end
 % EOF

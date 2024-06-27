@@ -8,9 +8,9 @@ figure;
 
 ax = axes('Position', [0.1 0.5 0.8 0.4], 'Box', 'on');
 
-plot(ax, lambda1_exp(1:10:end), P1_exp(1:10:end), 'Color', '#ffa600', 'Marker', 'o', 'MarkerFaceColor', '#ffa600', 'MarkerSize', 12, 'LineStyle', 'none');
+plot(ax, lambda1_exp(1:end-1), P1_exp(1:end-1), 'Color', '#ffa600', 'Marker', 'o', 'MarkerFaceColor', '#ffa600', 'MarkerSize', 12, 'LineStyle', 'none');
 hold(ax, 'on');
-plot(ax, lambda1_exp(1:10:end), P1_list(1:10:end), 'linewidth', 3.0, 'Color', '#ffa600', 'LineStyle', '-');
+plot(ax, lambda1_exp(1:end-1), P1_list(1:end-1), 'linewidth', 3.0, 'Color', '#ffa600', 'LineStyle', '-');
 
 xlabel(ax, 'Stretch', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
 ylabel(ax, 'Nominal stress', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
@@ -41,18 +41,21 @@ set(gcf, 'PaperSize', [X Y]);
 set(gcf, 'PaperPosition', [xMargin yMargin xSize ySize]);
 set(gcf, 'PaperOrientation', 'portrait');
 
+x_location = 8.8;
+y_location = 0.1;
 % print quality of fit
 chi = get_quality_of_fit(P1_list, P1_exp);
 text_chi = sprintf('$\\chi^2 = %.4g$', chi);
-text(9.0, 0.1, text_chi, ...
+text(x_location, y_location, text_chi, ...
         'HorizontalAlignment', 'center', ...
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
 % print MSD
+y_location = y_location + 5;
 MSD = get_MSD(P1_list, P1_exp);
 text_MSD = sprintf('$\\mathrm{MSD} = %.4g$', MSD);
-text(9.0, 13.5, text_MSD, ...
+text(x_location, y_location, text_MSD, ...
         'HorizontalAlignment', 'center', ...
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
@@ -60,8 +63,8 @@ text(9.0, 13.5, text_MSD, ...
 % print parameters
 text_mu_eq = cell(length(mu_eq), 1);
 text_alpha_eq = cell(length(alpha_eq), 1);
-x_location = 1.0;
-y_location = -50.0;
+x_location = 0.5;
+y_location = -20.0;
 for ii = 1:length(mu_eq)
     text_mu_eq{ii} = sprintf('$\\mu_%d^{\\infty} = %.4g$', ii, mu_eq(ii));
     text(x_location, y_location, text_mu_eq{ii}, ...
@@ -69,7 +72,7 @@ for ii = 1:length(mu_eq)
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-    x_location = x_location + 3.0;
+    x_location = x_location + 2.5;
 
     text_alpha_eq{ii} = sprintf('$\\alpha_%d^{\\infty} = %.4g$', ii, alpha_eq(ii));
     text(x_location, y_location, text_alpha_eq{ii}, ...
@@ -77,14 +80,14 @@ for ii = 1:length(mu_eq)
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-    x_location = x_location + 3.0;
+    x_location = x_location + 2.5;
 end
 
 text_mu_neq = cell(length(mu_neq), length(eta));
 text_alpha_neq = cell(length(alpha_neq), length(eta));
 text_eta = cell(length(eta), 1);
 for ii = 1:length(eta)
-    x_location = 1.0;
+    x_location = 0.5;
     y_location = y_location - 10.0;
     text_eta{ii} = sprintf('$\\eta_{\\mathrm{D}}^%d = %.4g$', ii, eta(ii));
     text(x_location, y_location, text_eta(ii), ...
@@ -92,22 +95,22 @@ for ii = 1:length(eta)
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
+    y_location = y_location - 10.0;
     for jj = 1:size(mu_neq,1)
-        y_location = y_location - 10.0;
         text_mu_neq{ii}{jj} = sprintf('$\\mu_{\\mathrm{neq}\\:%d}^{%d} = %.4g$', jj, ii, mu_neq(jj,ii));
         text(x_location, y_location, text_mu_neq{ii}{jj}, ...
             'HorizontalAlignment', 'center', ...
             'VerticalAlignment', 'bottom', ...
             'Interpreter', 'latex', ...
             'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-        x_location = x_location + 3.0;
+        x_location = x_location + 2.5;
         text_alpha_neq{ii}{jj} = sprintf('$\\alpha_{\\mathrm{neq}\\:%d}^{%d} = %.4g$', jj, ii, alpha_neq(jj,ii));
         text(x_location, y_location, text_alpha_neq{ii}{jj}, ...
             'HorizontalAlignment', 'center', ...
             'VerticalAlignment', 'bottom', ...
             'Interpreter', 'latex', ...
             'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-        x_location = x_location + 3.0;
+        x_location = x_location + 2.5;
     end
 end
 end

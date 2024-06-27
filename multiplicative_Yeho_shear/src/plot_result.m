@@ -41,7 +41,7 @@ set(gcf, 'PaperSize', [X Y]);
 set(gcf, 'PaperPosition', [xMargin yMargin xSize ySize]);
 set(gcf, 'PaperOrientation', 'portrait');
 
-x_location = 9.0;
+x_location = 8.6;
 y_location = 0.5;
 % print quality of fit
 chi = get_quality_of_fit(P_shear_list, P_shear_exp);
@@ -53,7 +53,7 @@ text(x_location, y_location, text_chi, ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
 
 % print MSD
-y_location = y_location + 15;
+y_location = y_location + 10;
 MSD = get_MSD(P_shear_list, P_shear_exp);
 text_MSD = sprintf('$\\mathrm{MSD} = %.4g$', MSD);
 text(x_location, y_location, text_MSD, ...

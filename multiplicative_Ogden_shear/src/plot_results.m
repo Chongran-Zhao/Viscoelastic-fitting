@@ -1,7 +1,7 @@
 function plot_results(paras, num_eq, num_neq, num_rel,...
-                            Ft_1, gamma1, time_1, P_shear_exp1,...
-                            Ft_2, gamma2, time_2, P_shear_exp2,...
-                            Ft_3, gamma3, time_3, P_shear_exp3)
+                            Ft_1, gamma1, time_1, P_shear_exp_1,...
+                            Ft_2, gamma2, time_2, P_shear_exp_2,...
+                            Ft_3, gamma3, time_3, P_shear_exp_3)
 [mu_eq, alpha_eq, eta, mu_neq, alpha_neq] = paras_to_array(paras, num_eq, num_neq, num_rel);
 
 P_shear_list_1 = get_P_ij_list(1, 2, mu_eq, alpha_eq, mu_neq, alpha_neq, eta, Ft_1, time_1);
@@ -12,15 +12,15 @@ figure;
 
 ax = axes('Position', [0.1 0.6 0.8 0.4], 'Box', 'on');
 
-plot(ax, gamma1(1:3:end), P_shear_exp1(1:3:end), 'Color', '#003f5c', 'Marker', 'o', 'MarkerFaceColor', '#003f5c', 'MarkerSize', 12, 'LineStyle', 'none');
+plot(ax, gamma1(1:3:end), P_shear_exp_1(1:3:end), 'Color', '#003f5c', 'Marker', 'o', 'MarkerFaceColor', '#003f5c', 'MarkerSize', 12, 'LineStyle', 'none');
 hold(ax, 'on');
 plot(ax, gamma1, P_shear_list_1, 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');
 hold(ax, 'on');
-plot(ax, gamma2(1:5:end), P_shear_exp2(1:5:end), 'Color', '#58508d', 'Marker', 'o', 'MarkerFaceColor', '#58508d', 'MarkerSize', 12, 'LineStyle', 'none');
+plot(ax, gamma2(1:5:end), P_shear_exp_2(1:5:end), 'Color', '#58508d', 'Marker', 'o', 'MarkerFaceColor', '#58508d', 'MarkerSize', 12, 'LineStyle', 'none');
 hold(ax, 'on');
 plot(ax, gamma2, P_shear_list_2, 'linewidth', 3.0, 'Color', '#58508d', 'LineStyle', '-');
 hold(ax, 'on');
-plot(ax, gamma3(1:5:end), P_shear_exp3(1:5:end), 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 12, 'LineStyle', 'none');
+plot(ax, gamma3(1:5:end), P_shear_exp_3(1:5:end), 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 12, 'LineStyle', 'none');
 hold(ax, 'on');
 plot(ax, gamma3, P_shear_list_3, 'linewidth', 3.0, 'Color', '#bc5090', 'LineStyle', '-');
 
@@ -56,12 +56,23 @@ set(gcf, 'PaperSize', [X Y]);
 set(gcf, 'PaperPosition', [xMargin yMargin xSize ySize]);
 set(gcf, 'PaperOrientation', 'portrait');
 
-MSD = get_MSD(P_shear_list_1, P_shear_exp1);
-MSD = MSD + get_MSD(P_shear_list_2, P_shear_exp2);
-MSD = MSD + get_MSD(P_shear_list_3, P_shear_exp3);
+% print quality of fit
+chi = get_quality_of_fit(P_shear_list_1, P_shear_exp_1)...
+    + get_quality_of_fit(P_shear_list_2, P_shear_exp_2)...
+    + get_quality_of_fit(P_shear_list_3, P_shear_exp_3);
+text_chi = sprintf('$\\chi^2 = %.4g$', chi);
+text(9.0, 0.1, text_chi, ...
+        'HorizontalAlignment', 'center', ...
+        'VerticalAlignment', 'bottom', ...
+        'Interpreter', 'latex', ...
+        'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
+
+MSD = get_MSD(P_shear_list_1, P_shear_exp_1);
+MSD = MSD + get_MSD(P_shear_list_2, P_shear_exp_2);
+MSD = MSD + get_MSD(P_shear_list_3, P_shear_exp_3);
 MSD = MSD / 3.0;
 text_MSD = sprintf('$\\mathrm{MSD} = %.4g$', MSD);
-text(10.5, 0.1, text_MSD, ...
+text(9.0, 15, text_MSD, ...
         'HorizontalAlignment', 'center', ...
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
@@ -71,8 +82,8 @@ text(10.5, 0.1, text_MSD, ...
 % % print parameters
 text_mu_eq = cell(length(mu_eq), 1);
 text_alpha_eq = cell(length(alpha_eq), 1);
-x_location = 1.0;
-y_location = -130.0;
+x_location = 0.5;
+y_location = -70.0;
 for ii = 1:length(mu_eq)
     text_mu_eq{ii} = sprintf('$\\mu_%d^{\\infty} = %.4g$', ii, mu_eq(ii));
     text(x_location, y_location, text_mu_eq{ii}, ...
@@ -95,7 +106,7 @@ text_mu_neq = cell(length(mu_neq), length(eta));
 text_alpha_neq = cell(length(alpha_neq), length(eta));
 text_eta = cell(length(eta), 1);
 for ii = 1:length(eta)
-    x_location = 1.0;
+    x_location = 0.5;
     y_location = y_location - 30.0;
     text_eta{ii} = sprintf('$\\eta_{\\mathrm{D}}^%d = %.4g$', ii, eta(ii));
     text(x_location, y_location, text_eta(ii), ...

@@ -6,7 +6,7 @@ if (size(mu_neq, 1) ~= num_rel)
 error("ERROR: number of relaxation process doesn't match mu_neq!");
 end
 num_paras = 2*num_eq + num_rel + 2*num_neq*num_rel;
-lb = zeros(num_paras, 1);
+lb = -Inf(num_paras, 1);
 ub = Inf(num_paras, 1);
 
 paras = [];

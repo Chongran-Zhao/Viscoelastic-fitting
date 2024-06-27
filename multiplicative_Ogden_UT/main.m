@@ -2,7 +2,7 @@ clc; clear; close all
 
 addpath("src");
 
-fid = fopen('../exp_data_UT/data_1.txt', 'r');
+fid = fopen('../exp_data_UT/data_0d3.txt', 'r');
 data = textscan(fid, '%f %f %f', 'Delimiter', '\n');
 fclose(fid);
 
@@ -30,9 +30,9 @@ alpha_eq = [1.0, 1.0];
 % alpha_neq = [alpha1_neq1, alpha2_neq1;
 %              alpha1_neq2, alpha2_neq2]
 
-eta = [1.0];
-mu_neq = [1.0, 1.0];
-alpha_neq = [1.0, 1.0];
+eta = [1000.0];
+mu_neq = [1.0];
+alpha_neq = [1.0];
 
 [paras0, lb, ub, num_eq, num_neq, num_rel] = array_to_paras(mu_eq, alpha_eq, eta, mu_neq, alpha_neq);
 
@@ -45,4 +45,4 @@ options = optimoptions('lsqnonlin', ...
 [paras, ~] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
 
 plot_result(paras, num_eq, num_neq, num_rel, Ft, time, lambda1_exp, P1_exp);
-print(gcf, '-dpdf', 'fig_1.pdf');
+print(gcf, '-djpeg', 'fig_UT_0d3.jpg');
