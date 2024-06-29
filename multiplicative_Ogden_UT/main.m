@@ -2,7 +2,7 @@ clc; clear; close all
 
 addpath("src");
 
-fid = fopen('../exp_data_UT/data_0d3.txt', 'r');
+fid = fopen('../exp_data_UT/data_0d03.txt', 'r');
 data = textscan(fid, '%f %f %f', 'Delimiter', '\n');
 fclose(fid);
 
@@ -45,4 +45,4 @@ options = optimoptions('lsqnonlin', ...
 [paras, ~] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
 
 plot_result(paras, num_eq, num_neq, num_rel, Ft, time, lambda1_exp, P1_exp);
-print(gcf, '-djpeg', 'fig_UT_0d3.jpg');
+print(gcf, '-djpeg', 'fig_UT_0d03.jpg');

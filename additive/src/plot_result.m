@@ -26,7 +26,7 @@ set(ax, 'TickDir', 'out', ...
     'LineWidth', 2, ...
     'FontSize', 25, 'FontWeight', 'bold');
 
-l = legend(ax, 'experiment', 'fitting', 'location', 'northeast', 'Orientation', 'horizontal');
+l = legend(ax, 'experiment', 'fitting', 'location', 'northwest', 'Orientation', 'horizontal');
 set(l, 'interpreter', 'latex', 'fontsize', 25, 'box', 'off', 'FontWeight', 'bold', 'FontName', 'Helvetica', 'NumColumns', 4);
 
 X = 40.0;
@@ -41,8 +41,8 @@ set(gcf, 'PaperSize', [X Y]);
 set(gcf, 'PaperPosition', [xMargin yMargin xSize ySize]);
 set(gcf, 'PaperOrientation', 'portrait');
 
-x_location = 2.01;
-y_location = 0.1;
+x_location = 1.5;
+y_location = 0.2;
 % print quality of fit
 chi = get_quality_of_fit(P1_list, P1_exp);
 text_chi = sprintf('$\\chi^2 = %.4g$', chi);
@@ -53,7 +53,7 @@ text(x_location, y_location, text_chi, ...
     'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
 
 % print MSD
-y_location = y_location + 0.7;
+y_location = y_location + 1;
 MSD = get_MSD(P1_list, P1_exp);
 text_MSD = sprintf('$\\mathrm{MSD}=%.4g$', MSD);
 text(x_location, y_location, text_MSD, ...
@@ -62,53 +62,63 @@ text(x_location, y_location, text_MSD, ...
     'Interpreter', 'latex', ...
     'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
 
+% print NMAD
+y_location = y_location + 1;
+NMAD = get_NMAD(P1_list, P1_exp);
+text_NMAD = sprintf('$\\mathrm{NMAD}=%.4g$', NMAD);
+text(x_location, y_location, text_NMAD, ...
+    'HorizontalAlignment', 'center', ...
+    'VerticalAlignment', 'bottom', ...
+    'Interpreter', 'latex', ...
+    'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
 
 % print parameters
 text_mu_eq = cell(length(mu_eq), 1);
 text_m_eq = cell(length(m_eq), 1);
 text_n_eq = cell(length(n_eq), 1);
 
-x_location = 1.03;
+x_location = 1.1;
+y_location = -4;
 for ii = 1:length(mu_eq)
     text_mu_eq{ii} = sprintf('$\\mu_%d^{\\infty} = %.4g$', ii, mu_eq(ii));
-    text(x_location, -4.0, text_mu_eq{ii}, ...
+    text(x_location, y_location, text_mu_eq{ii}, ...
         'HorizontalAlignment', 'center', ...
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-    x_location = x_location + 0.25;
+    x_location = x_location + 0.15;
 
     text_m_eq{ii} = sprintf('$m_%d^{\\infty} = %.4g$', ii, m_eq(ii));
-    text(x_location, -4.0, text_m_eq{ii}, ...
+    text(x_location, y_location, text_m_eq{ii}, ...
         'HorizontalAlignment', 'center', ...
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-    x_location = x_location + 0.25;
+    x_location = x_location + 0.15;
 
     text_n_eq{ii} = sprintf('$n_%d^{\\infty} = %.4g$', ii, n_eq(ii));
-    text(x_location, -4.0, text_n_eq{ii}, ...
+    text(x_location, y_location, text_n_eq{ii}, ...
         'HorizontalAlignment', 'center', ...
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-    x_location = x_location + 0.25;
+    x_location = x_location + 0.15;
 end
 
 text_mu_neq = cell(length(mu_neq), length(eta_d));
 text_m_neq = cell(length(m_neq), length(eta_d));
 text_n_neq = cell(length(n_neq), length(eta_d));
 text_eta = cell(length(eta_d), 1);
-y_location = -6.0;
+x_location = 1.1;
+y_location = y_location - 1;
 for ii = 1:length(eta_d)
-    x_location = 1.03;
     text_eta{ii} = sprintf('$\\eta_{\\mathrm{D}}^%d = %.4g$', ii, eta_d(ii));
     text(x_location, y_location, text_eta(ii), ...
         'HorizontalAlignment', 'center', ...
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-    y_location = y_location - 2.0;
+    y_location = y_location - 1;
     for jj = 1:size(mu_neq,1)
         text_mu_neq{ii}{jj} = sprintf('$\\mu_{\\mathrm{neq}\\:%d}^{%d} = %.4g$', jj, ii, mu_neq(jj,ii));
         text(x_location, y_location, text_mu_neq{ii}{jj}, ...
@@ -116,7 +126,7 @@ for ii = 1:length(eta_d)
             'VerticalAlignment', 'bottom', ...
             'Interpreter', 'latex', ...
             'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-        x_location = x_location + 0.3;
+        x_location = x_location + 0.15;
 
         text_m_neq{ii}{jj} = sprintf('$m_{\\mathrm{neq}\\:%d}^{%d} = %.4g$', jj, ii, m_neq(jj,ii));
         text(x_location, y_location, text_m_neq{ii}{jj}, ...
@@ -124,7 +134,7 @@ for ii = 1:length(eta_d)
             'VerticalAlignment', 'bottom', ...
             'Interpreter', 'latex', ...
             'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-        x_location = x_location + 0.3;
+        x_location = x_location + 0.15;
 
         text_n_neq{ii}{jj} = sprintf('$n_{\\mathrm{neq}\\:%d}^{%d} = %.4g$', jj, ii, n_neq(jj,ii));
         text(x_location, y_location, text_n_neq{ii}{jj}, ...
@@ -132,9 +142,9 @@ for ii = 1:length(eta_d)
             'VerticalAlignment', 'bottom', ...
             'Interpreter', 'latex', ...
             'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-        x_location = x_location + 0.3;
+        x_location = x_location + 0.15;
 
     end
-    y_location = y_location - 2.0;
+    y_location = y_location - 1.0;
 end
 end
