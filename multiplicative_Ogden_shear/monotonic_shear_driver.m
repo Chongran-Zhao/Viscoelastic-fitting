@@ -1,9 +1,9 @@
 clc; clear; close all
 
 addpath("src");
-data = readmatrix('../monotonic_shear_0.01.csv');
+data = readmatrix('../monotonic_shear_0d01.csv');
 time = data(:,1);
-P1_exp = data(:,3);
+P_exp = data(:,3);
 gamma = data(:,4);
 
 % Uniaxial tension experimental case
@@ -27,14 +27,14 @@ alpha_eq = [1.0];
 % alpha_neq = [alpha1_neq1, alpha2_neq1;
 %              alpha1_neq2, alpha2_neq2]
 
-eta = [100.0];
-mu_neq = [1.0, 1.0];
-alpha_neq = [1.0, 1.0];
+eta = [1000.0];
+mu_neq = [1.0];
+alpha_neq = [1.0];
 
 % out = get_be_t(time, mu_neq, alpha_neq, eta, Ft)
 [paras0, lb, ub, num_eq, num_neq, num_rel] = array_to_paras(mu_eq, alpha_eq, eta, mu_neq, alpha_neq);
 
-objectiveFunction = @(paras) objective(paras, Ft, P1_exp, time, num_eq, num_neq, num_rel);
+objectiveFunction = @(paras) objective(paras, Ft, P_exp, time, num_eq, num_neq, num_rel);
 options = optimoptions('lsqnonlin', ...
     'Algorithm', 'interior-point', ...
     'MaxIterations', 1000, ...
@@ -42,5 +42,5 @@ options = optimoptions('lsqnonlin', ...
 
 [paras, ~] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
 
-plot_result(paras, num_eq, num_neq, num_rel, Ft, time, gamma, P1_exp);
+plot_result(paras, num_eq, num_neq, num_rel, Ft, time, gamma, P_exp, 0.01);
 print(gcf, '-djpeg', 'fig_0d01.jpg');
