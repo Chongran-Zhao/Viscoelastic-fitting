@@ -43,11 +43,10 @@ mu_eq = [1.0];
 m_eq = [1.0];
 n_eq = [1.0];
 
-mu_neq = [1.0];
+mu_neq = [10.0];
 m_neq = [1.0];
 n_neq = [1.0];
-eta_d = [1.0e7];
-
+eta_d = [1.0e4];
 [paras0, num_eq, num_neq, lb, ub] = array_to_paras(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d);
 
 objectiveFunction = @(paras) multi_objective(paras, Ft_1, P_exp_1, time_1,...

@@ -14,8 +14,8 @@ M2 = kron(N2, N2');
 M3 = kron(N3, N3');
 
 E = get_CR_eig_val(m, n, lambda);
-E_der = get_CR_eig_val_der(m, n, lambda);
-E_der2 = get_CR_eig_val_der2(m, n, lambda);
+E_der = get_CR_eig_val_der(m, n, lambda, 1);
+E_der2 = get_CR_eig_val_der(m, n, lambda, 2);
 
 % first part
 f = -1.0 ./ (lambda.^3) .* E_der + 1.0 ./ (lambda.^2) .* E_der2;

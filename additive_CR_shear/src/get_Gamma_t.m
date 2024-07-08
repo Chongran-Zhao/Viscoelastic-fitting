@@ -19,9 +19,9 @@ for ii = 1:length(time)
     %     dt = time(ii) - time(ii-1);
     % end
     % while error > 1e-6 && counter < 100
-    %     tangent = (convert_4d_to_2d(get_res_tangent(mu_neq, m_neq, n_neq, eta_d, C_mid, Gamma_old, Gamma_new, dt)));
-    %     residual = (convert_2d_to_1d(get_res(mu_neq, m_neq, n_neq, eta_d, C_mid, Gamma_old, Gamma_new, dt)));
-    %     incremental = (convert_1d_to_2d(bicgstab(tangent, -residual)));
+    %     tangent = get_res_tangent(mu_neq, m_neq, n_neq, eta_d, C_mid, Gamma_old, Gamma_new, dt);
+    %     residual = get_res(mu_neq, m_neq, n_neq, eta_d, C_mid, Gamma_old, Gamma_new, dt);
+    %     incremental = solve_AB(tangent, -residual);
     %     Gamma_new = Gamma_new + incremental;
     %     counter = counter + 1;
     %     error = norm(residual);

@@ -3,7 +3,7 @@ clc; clear; close all
 addpath("src");
 data = readmatrix('../monotonic_shear_1.csv');
 time = data(:,1);
-P1_exp = data(:,3);
+P_exp = data(:,3);
 gamma = data(:,4);
 
 % Uniaxial tension experimental case
@@ -21,16 +21,16 @@ n_eq = [1.0];
 mu_neq = [1.0];
 m_neq = [1.0];
 n_neq = [1.0];
-eta_d = [1.0e5];
+eta_d = [1.0e4];
 
 [paras0, num_eq, num_neq, lb, ub] = array_to_paras(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d);
 
-objectiveFunction = @(paras) objective(paras, Ft, P1_exp, time, num_eq, num_neq);
+objectiveFunction = @(paras) objective(paras, Ft, P_exp, time, num_eq, num_neq);
 options = optimoptions('lsqnonlin', ...
     'Algorithm', 'interior-point', ...
     'MaxIterations', 1000, ...
     'Display', 'iter-detailed');
 
 [paras, resnorm] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
-plot_result(paras, num_eq, num_neq, Ft, time, gamma, P1_exp);
+plot_result(paras, num_eq, num_neq, Ft, time, gamma, P_exp);
 print(gcf, '-djpeg', 'fig_shear_1.jpg');
