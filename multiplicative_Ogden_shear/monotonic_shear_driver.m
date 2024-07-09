@@ -1,7 +1,7 @@
 clc; clear; close all
 
 addpath("src");
-data = readmatrix('../monotonic_shear_0d01.csv');
+data = readmatrix('../exp_data_shear/monotonic_shear_0d1.csv');
 time = data(:,1);
 P_exp = data(:,3);
 gamma = data(:,4);
@@ -36,11 +36,11 @@ alpha_neq = [1.0];
 
 objectiveFunction = @(paras) objective(paras, Ft, P_exp, time, num_eq, num_neq, num_rel);
 options = optimoptions('lsqnonlin', ...
-    'Algorithm', 'interior-point', ...
+    'Algorithm', 'levenberg-marquardt', ...
     'MaxIterations', 1000, ...
     'Display', 'iter');
 
 [paras, ~] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
 
-plot_result(paras, num_eq, num_neq, num_rel, Ft, time, gamma, P_exp, 0.01);
-print(gcf, '-djpeg', 'fig_0d01.jpg');
+plot_result(paras, num_eq, num_neq, num_rel, Ft, time, gamma, P_exp, 0.1);
+print(gcf, '-djpeg', 'fig_0d1.jpg');

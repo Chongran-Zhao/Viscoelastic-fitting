@@ -1,8 +1,13 @@
 function out = get_CR_eig_val_der(m, n, lambda, order)
+out = zeros(3,1);
 switch order
     case 1
-        out = (m/(m+n)) .* lambda.^(m-1.0) + (n/(m+n)) .* lambda.^(-n-1.0);
+        for ii = 1:3
+            out(ii) = m/(m+n) * lambda(ii)^(m-1) + n/(m+n) * lambda(ii)^(-n-1);
+        end
     case 2
-        out = (m*m/(m+n)) .* lambda.^(m-2.0) - (n*n/(m+n)) .* lambda.^(-n-2.0);
+        for ii = 1:3
+            out(ii) = (m-1)*m/(m+n) * lambda(ii)^(m-2) - (n+1)*n/(m+n) * lambda(ii)^(-n-2);
+        end
 end
 end

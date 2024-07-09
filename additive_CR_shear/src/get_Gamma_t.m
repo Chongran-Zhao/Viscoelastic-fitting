@@ -15,7 +15,7 @@ for ii = 1:length(time)
     %     C_new = Ft(:,:,ii)' * Ft(:,:,ii);
     %     C_mid = 0.5 .* (C_old + C_new);
     %     Gamma_old = out(:,:,ii-1);
-    %     Gamma_new = Gamma_old;
+    %     Gamma_new = C_mid;
     %     dt = time(ii) - time(ii-1);
     % end
     % while error > 1e-6 && counter < 100
@@ -33,7 +33,7 @@ for ii = 1:length(time)
         Q_proj = get_proj_Q(m_neq, n_neq, Gamma_old);
         T_neq = get_T_neq(mu_neq, m_neq, n_neq, C_old, Gamma_old);
         Q = contract(T_neq, Q_proj);
-        out(:,:,ii) = Gamma_old + 2.0 .* dt ./ eta_d .* Q;
+        out(:,:,ii) = Gamma_old + dt ./ eta_d .* Q;
     else
         dt = time(ii) - time(ii-1);
         Gamma_old = out(:,:,ii-1);
@@ -41,7 +41,7 @@ for ii = 1:length(time)
         Q_proj = get_proj_Q(m_neq, n_neq, Gamma_old);
         T_neq = get_T_neq(mu_neq, m_neq, n_neq, C_old, Gamma_old);
         Q = contract(T_neq, Q_proj);
-        out(:,:,ii) = Gamma_old + 2.0 .* dt ./ eta_d .* Q;
+        out(:,:,ii) = Gamma_old + dt ./ eta_d .* Q;
     end
 end
 end

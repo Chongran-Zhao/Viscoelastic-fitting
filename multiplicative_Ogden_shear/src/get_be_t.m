@@ -45,10 +45,10 @@ out = zeros(size(Ft));
 out(:,:,1) = eye(3);
 for ii = 2:length(time)
     dt = time(ii) - time(ii-1);
-    be_old = out(:,:,ii-1);
-    be_trial = Ft(:,:,ii) * get_Cv_inv(Ft(:,:,ii-1), out(:,:,ii-1)) * Ft(:,:,ii)';
-    tau_old = get_tau_iso_neq(mu_neq, alpha_neq, be_old);
-    out(:,:,ii) = be_trial - dt / eta .* (tau_old * be_trial);
+    % be_old = out(:,:,ii-1);
+    be_trail = Ft(:,:,ii) * get_Cv_inv(Ft(:,:,ii-1), out(:,:,ii-1)) * Ft(:,:,ii)';
+    tau_old = get_tau_iso_neq(mu_neq, alpha_neq, be_trail);
+    out(:,:,ii) = be_trail - dt / eta .* (tau_old * be_trail);
 end
 end
 % EOF

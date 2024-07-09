@@ -1,5 +1,5 @@
 clc;clear;close all
-addpath("src/");
+addpath('src/')
 A = rand(3,3,3,3);
 for ii = 1:3
     for jj = 1:3
@@ -10,7 +10,6 @@ for ii = 1:3
         end
     end
 end
-
 for ii = 1:3
     for jj = 1:3
         for kk = 1:3
@@ -20,14 +19,13 @@ for ii = 1:3
         end
     end
 end
-
 X = rand(3,3);
 for ii = 1:3
     for jj = 1:3
         X(ii,jj) = X(jj,ii);
     end
 end
-
-B = contract(A,X);
+format long
 X
-XX = solve_AB(A,B)
+B = contract(A,X);
+X = solve_AB(A,B)

@@ -8,6 +8,7 @@ for ii = 1:num_eq
     n_eq = [n_eq, paras(3*(ii-1)+3)];
 end
 
+
 mu_neq = [];
 m_neq = [];
 n_neq = [];
