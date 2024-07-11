@@ -39,14 +39,14 @@ Ft_3(3,3,:) = 1.0;
 Ft_3(1,2,:) = gamma_3(:);
 
 % parameters
-mu_eq = [100.0];
-m_eq = [1.0e-2];
-n_eq = [1.0e-2];
+mu_eq = [1.0];
+m_eq = [1.0];
+n_eq = [1.0];
 
 mu_neq = [1.0];
 m_neq = [1.0];
 n_neq = [1.0];
-eta_d = [1.0];
+eta_d = [10.0];
 [paras0, num_eq, num_neq, lb, ub] = array_to_paras(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d);
 
 objectiveFunction = @(paras) multi_objective(paras, Ft_1, P_exp_1, time_1,...

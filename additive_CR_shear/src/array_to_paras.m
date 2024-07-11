@@ -12,13 +12,17 @@ else
 end
 
 paras = [];
+ub = [];
+lb = [];
 for ii = 1:num_eq
     paras = [paras, mu_eq(ii), m_eq(ii), n_eq(ii)];
+    lb = [lb, 0, -3, -3];
+    ub = [ub, Inf, 3, 3];
 end
 
 for ii = 1:num_neq
     paras = [paras, mu_neq(ii), m_neq(ii), n_neq(ii), eta_d(ii)];
+    lb = [lb, 0, -3, -3, 0.0];
+    ub = [ub, Inf, 3, 3, Inf];
 end
-lb = -Inf(3*num_eq + 4*num_neq, 1);
-ub = Inf(3*num_eq + 4*num_neq, 1);
 end

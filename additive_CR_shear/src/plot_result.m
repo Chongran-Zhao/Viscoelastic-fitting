@@ -7,7 +7,7 @@ P_pre = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft, 
 switch mode
     case 1
         figure;
-        ax = axes('Position', [0.1 0.5 0.8 0.4], 'Box', 'on');
+        ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
         plot(ax, gamma(1:2:end-1), P_exp(1:2:end-1), 'Color', '#ffa600', 'Marker', 'o', 'MarkerFaceColor', '#ffa600', 'MarkerSize', 12, 'LineStyle', 'none');
         hold(ax, 'on');
         plot(ax, gamma(1:2:end-1), P_pre(1:2:end-1), 'linewidth', 3.0, 'Color', '#ffa600', 'LineStyle', '-');
@@ -158,7 +158,7 @@ switch mode
         end
     case 0.1
         figure;
-        ax = axes('Position', [0.1 0.5 0.8 0.4], 'Box', 'on');
+        ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
         plot(ax, gamma(1:2:end-1), P_exp(1:2:end-1), 'Color', '#ffa600', 'Marker', 'o', 'MarkerFaceColor', '#ffa600', 'MarkerSize', 12, 'LineStyle', 'none');
         hold(ax, 'on');
         plot(ax, gamma(1:2:end-1), P_pre(1:2:end-1), 'linewidth', 3.0, 'Color', '#ffa600', 'LineStyle', '-');
@@ -309,7 +309,7 @@ switch mode
         end
     case 0.01
         figure;
-        ax = axes('Position', [0.1 0.5 0.8 0.4], 'Box', 'on');
+        ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
         plot(ax, gamma(1:2:end-1), P_exp(1:2:end-1), 'Color', '#ffa600', 'Marker', 'o', 'MarkerFaceColor', '#ffa600', 'MarkerSize', 12, 'LineStyle', 'none');
         hold(ax, 'on');
         plot(ax, gamma(1:2:end-1), P_pre(1:2:end-1), 'linewidth', 3.0, 'Color', '#ffa600', 'LineStyle', '-');

@@ -16,7 +16,7 @@ P_pre_3 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft
 
 figure;
 
-ax = axes('Position', [0.1 0.6 0.8 0.4], 'Box', 'on');
+ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
 plot(ax, gamma_1, P_exp_1, 'Color', '#003f5c', 'Marker', 'o', 'MarkerFaceColor', '#003f5c', 'MarkerSize', 12, 'LineStyle', 'none');
 hold(ax, 'on');
 plot(ax, gamma_1, P_pre_1, 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');

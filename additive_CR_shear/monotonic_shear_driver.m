@@ -1,7 +1,7 @@
 clc; clear; close all
 
 addpath("src");
-data = readmatrix('../exp_data_shear/monotonic_shear_0d01.csv');
+data = readmatrix('../exp_data_shear/monotonic_shear_1.csv');
 time = data(:,1);
 P_exp = data(:,3);
 gamma = data(:,4);
@@ -18,7 +18,7 @@ mu_eq = [1.0];
 m_eq = [1.0];
 n_eq = [1.0];
 
-mu_neq = [10.0];
+mu_neq = [1.0];
 m_neq = [1.0];
 n_neq = [1.0];
 eta_d = [100.0];
@@ -27,10 +27,10 @@ eta_d = [100.0];
 
 objectiveFunction = @(paras) objective(paras, Ft, P_exp, time, num_eq, num_neq);
 options = optimoptions('lsqnonlin', ...
-    'Algorithm', 'trust-region-reflective', ...
-    'MaxIterations', 1000, ...
+    'Algorithm', 'levenberg-marquardt', ...
+    'MaxIterations', 500, ...
     'Display', 'iter-detailed');
 
 [paras, resnorm] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
-plot_result(paras, num_eq, num_neq, Ft, time, gamma, P_exp, 0.01);
-print(gcf, '-djpeg', 'fig_shear_0d01.jpg');
+plot_result(paras, num_eq, num_neq, Ft, time, gamma, P_exp, 0.1);
+print(gcf, '-djpeg', 'fig_shear_1.jpg');

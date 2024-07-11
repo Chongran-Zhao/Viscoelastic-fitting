@@ -2,7 +2,9 @@
 % where A is the forth-order tensor with minor symmetry
 % X and B should be symmetric matrix
 function out = solve_AB(A, B)
-map = [1, 6, 5, 6, 2, 4, 5, 4, 3];
+% A = real(A);
+% B = real(B);
+map = [1, 4, 5, 4, 2, 6, 5, 6, 3];
 AA = zeros(6,6);
 BB = zeros(6,1);
 out = zeros(3,3);
@@ -16,6 +18,7 @@ for ii = 1:3
         end
     end
 end
+
 XX = AA \ BB;
 
 for ii = 1:3

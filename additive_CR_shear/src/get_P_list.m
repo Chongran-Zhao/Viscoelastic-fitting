@@ -6,12 +6,12 @@ end
 for ii = 1:length(eta)
     out = out + get_P_iso_neq_list(mu_neq(ii), m_neq(ii), n_neq(ii), eta(ii), Ft, time);
 end
-sigma = zeros(size(out));
 % determine the pressure through incompressbility constrain
 for ii = 1:length(time)
-    sigma(:,:,ii) = out(:,:,ii) * transpose(Ft(:,:,ii));
-    sigma(:,:,ii) = sigma(:,:,ii) - sigma(3,3,ii) .* eye(3);
-    out(:,:,ii) = sigma(:,:,ii) * inv(transpose(Ft(:,:,ii)));
+    F = Ft(:,:,ii);
+    inv_F_transpose = inv(F');
+    p = out(3,3,ii) / inv_F_transpose(3,3);
+    out(:,:,ii) = out(:,:,ii) - p .* inv_F_transpose;
 end
 end
 % EOF
