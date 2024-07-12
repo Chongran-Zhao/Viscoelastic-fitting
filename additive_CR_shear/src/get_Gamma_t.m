@@ -22,7 +22,6 @@ for ii = 1:length(time)
         Gamma_new = out(:,:,ii-1);
         dt = time(ii) - time(ii-1);
     end
-
     Gamma_mid = 0.5 .* (Gamma_old + Gamma_new);
     tangent0 = get_res_tangent(mu_neq, m_neq, n_neq, eta_d, C_mid, Gamma_mid, dt);
     residual0 = get_res(mu_neq, m_neq, n_neq, eta_d, C_mid, Gamma_old, Gamma_new, dt);

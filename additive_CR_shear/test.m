@@ -29,7 +29,7 @@ addpath('src/')
 % X
 % B = contract(A,X);
 % X = solve_AB(A,B)
-data = readmatrix('../exp_data_shear/monotonic_shear_0d1.csv');
+data = readmatrix('../exp_data_shear/monotonic_shear_1.csv');
 time = data(:,1);
 P_exp = data(:,3);
 gamma = data(:,4);
