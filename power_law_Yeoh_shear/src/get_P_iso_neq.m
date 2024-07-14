@@ -4,7 +4,7 @@
 % F is one 3x3 deformation gradient at specific time
 % be is one 3x3 strain tensor at specific time
 
-function out = get_P_iso_neq(xi_neq, Fe, F)
-out = F * get_S_iso_neq(xi_neq, Fe, F);
+function out = get_P_iso_neq(xi_neq, be, F)
+out = F * get_S_iso_neq(xi_neq, be, F);
 end
 % EOF

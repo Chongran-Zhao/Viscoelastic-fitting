@@ -18,4 +18,4 @@ xi_neq = [1.0, 1.0e-1, 1.0e-2];
 tau_hat = 1.0e2;
 power_m = 1.0;
 
-out = get_Fe_t(time, xi_neq, tau_hat, power_m , Ft)
+out = get_be_t(time, xi_neq, tau_hat, power_m , Ft)
