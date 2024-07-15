@@ -40,8 +40,8 @@ Ft_3(1,2,:) = gamma_3(:);
 
 xi_eq = [1.0, 1.0, 1.0];
 xi_neq = [1.0, 1.0, 1.0];
-tau_hat = 1.0e2;
-power_m = 1.0;
+tau_hat = 50.0;
+power_m = 2.0;
 
 [paras0, lb, ub] = array_to_paras(xi_eq, xi_neq, tau_hat, power_m);
 
