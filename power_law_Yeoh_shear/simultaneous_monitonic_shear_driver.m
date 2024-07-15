@@ -40,8 +40,8 @@ Ft_3(1,2,:) = gamma_3(:);
 
 xi_eq = [1.0, 1.0, 1.0];
 xi_neq = [1.0, 1.0, 1.0];
-tau_hat = 50.0;
-power_m = 2.0;
+tau_hat = 100.0;
+power_m = 1.0;
 
 [paras0, lb, ub] = array_to_paras(xi_eq, xi_neq, tau_hat, power_m);
 
@@ -50,7 +50,7 @@ objectiveFunction = @(paras) multi_objective(paras, Ft_1, P_exp_1, time_1,...
                                       Ft_3, P_exp_3, time_3);
 
 options = optimoptions('lsqnonlin', ...
-    'Algorithm', 'interior-point', ...
+    'Algorithm', 'levenberg-marquardt', ...
     'MaxIterations', 1000, ...
     'Display', 'iter');
 

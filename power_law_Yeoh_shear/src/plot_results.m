@@ -29,19 +29,19 @@ P_pre_3 = get_P_ij_list(1, 2, xi_eq, xi_neq, tau_hat, power_m, Ft_3, time_3);
 
 figure;
 
-ax = axes('Position', [0.1 0.6 0.8 0.4], 'Box', 'on');
+ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
 
 plot(ax, gamma_1, P_exp_1, 'Color', '#003f5c', 'Marker', 'o', 'MarkerFaceColor', '#003f5c', 'MarkerSize', 12, 'LineStyle', 'none');
 hold(ax, 'on');
 plot(ax, gamma_1, P_pre_1, 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');
 hold(ax, 'on');
-plot(ax, gamma_2(1:5:end), P_exp_2(1:5:end), 'Color', '#58508d', 'Marker', 'o', 'MarkerFaceColor', '#58508d', 'MarkerSize', 12, 'LineStyle', 'none');
+plot(ax, gamma_2, P_exp_2, 'Color', '#58508d', 'Marker', 'o', 'MarkerFaceColor', '#58508d', 'MarkerSize', 12, 'LineStyle', 'none');
 hold(ax, 'on');
-plot(ax, gamma_2(1:5:end), P_pre_2(1:5:end), 'linewidth', 3.0, 'Color', '#58508d', 'LineStyle', '-');
+plot(ax, gamma_2, P_pre_2, 'linewidth', 3.0, 'Color', '#58508d', 'LineStyle', '-');
 hold(ax, 'on');
-plot(ax, gamma_3(1:10:end), P_exp_3(1:10:end), 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 12, 'LineStyle', 'none');
+plot(ax, gamma_3, P_exp_3, 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 12, 'LineStyle', 'none');
 hold(ax, 'on');
-plot(ax, gamma_3(1:10:end), P_pre_3(1:10:end), 'linewidth', 3.0, 'Color', '#bc5090', 'LineStyle', '-');
+plot(ax, gamma_3, P_pre_3, 'linewidth', 3.0, 'Color', '#bc5090', 'LineStyle', '-');
 
 xlabel(ax, 'Stretch', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
 ylabel(ax, 'Nominal stress', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
@@ -61,7 +61,7 @@ l = legend(ax, 'exp-1', 'fit-1',...
     'exp-0d1', 'fit-0d1',...
     'exp-0d01', 'fit-0d01',...
     'location', 'northwest', 'Orientation', 'horizontal');
-set(l, 'interpreter', 'latex', 'fontsize', 25, 'box', 'off', 'FontWeight', 'bold', 'FontName', 'Helvetica', 'NumColumns', 4);
+set(l, 'interpreter', 'latex', 'fontsize', 25, 'box', 'off', 'FontWeight', 'bold', 'FontName', 'Helvetica', 'NumColumns', 2);
 
 X = 40.0;
 Y = 40.0;
@@ -77,7 +77,7 @@ set(gcf, 'PaperOrientation', 'portrait');
 
 x_location = 8.7;
 y_location = 0.1;
-delta_y = 17;
+delta_y = 14;
 % print R^2
 R_square = (get_R_square(P_exp_1, P_pre_1) + get_R_square(P_exp_2, P_pre_2) + get_R_square(P_exp_3, P_pre_3)) / 3.0;
 text_R_square = sprintf('$R^2=%.4g$', R_square);
@@ -125,8 +125,8 @@ text(x_location, y_location, text_MSD, ...
 % print parameters
 text_xi_eq = cell(length(xi_eq), 1);
 x_location = 1.0;
-y_location = -80;
-delta_y = -20;
+y_location = -60;
+delta_y = -30;
 delta_x = 3.0;
 for ii = 1:length(xi_eq)
     text_xi_eq{ii} = sprintf('$C_%d^{\\infty} = %.4g$', ii, xi_eq(ii));

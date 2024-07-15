@@ -5,7 +5,7 @@ Ft(1,1,:) = 1.0;
 Ft(2,2,:) = 1.0;
 Ft(3,3,:) = 1.0;
 Ft(1,2,:) = gamma(:);
-[xi_eq, xi_neq, tau_hat, power_m] = paras_to_array(paras)
+[xi_eq, xi_neq, tau_hat, power_m] = paras_to_array(paras);
 P_pre = get_P_ij_list(1, 2, xi_eq, xi_neq, tau_hat, power_m, Ft, time);
 
 switch mode
