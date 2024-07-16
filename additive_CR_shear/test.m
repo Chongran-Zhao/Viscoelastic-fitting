@@ -52,4 +52,4 @@ eta_d = [1.0];
 % eta_d = [99.8926];
 
 
-out = get_Gamma_t(mu_neq, m_neq, n_neq, eta_d, Ft, time)
+out = get_Ev_t(mu_neq, m_neq, n_neq, eta_d, Ft, time)

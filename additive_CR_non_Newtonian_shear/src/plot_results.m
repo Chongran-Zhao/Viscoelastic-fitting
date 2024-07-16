@@ -3,16 +3,16 @@ function plot_results(paras, num_eq, num_neq,...
                             Ft_2, time_2, P_exp_2,...
                             Ft_3, time_3, P_exp_3)
 
-[mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d] = paras_to_array(paras, num_eq, num_neq);
+[mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha] = paras_to_array(paras, num_eq, num_neq);
 gamma_1 = zeros(size(P_exp_1));
 gamma_2 = zeros(size(P_exp_2));
 gamma_3 = zeros(size(P_exp_3));
 gamma_1(:) = Ft_1(1,2,:);
 gamma_2(:) = Ft_2(1,2,:);
 gamma_3(:) = Ft_3(1,2,:);
-P_pre_1 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_1, time_1);
-P_pre_2 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_2, time_2);
-P_pre_3 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_3, time_3);
+P_pre_1 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha, Ft_1, time_1);
+P_pre_2 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha, Ft_2, time_2);
+P_pre_3 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha, Ft_3, time_3);
 
 figure;
 
@@ -145,19 +145,27 @@ end
 
 y_location = y_location + delta_y;
 
-text_mu_neq = cell(length(mu_neq), length(eta_d));
-text_m_neq = cell(length(m_neq), length(eta_d));
-text_n_neq = cell(length(n_neq), length(eta_d));
-text_eta = cell(length(eta_d), 1);
-for ii = 1:length(eta_d)
+text_mu_neq = cell(length(mu_neq), length(alpha));
+text_m_neq = cell(length(m_neq), length(alpha));
+text_n_neq = cell(length(n_neq), length(alpha));
+text_eta = cell(length(alpha), 1);
+for ii = 1:length(p)
     x_location = 1.5;
-    text_eta{ii} = sprintf('$\\eta_{\\mathrm{D}}^%d = %.4g$', ii, eta_d(ii));
-    text(x_location, y_location, text_eta(ii), ...
+    text_p{ii} = sprintf('$p^%d = %.4g$', ii, p(ii));
+    text(x_location, y_location, text_p(ii), ...
+        'HorizontalAlignment', 'center', ...
+        'VerticalAlignment', 'bottom', ...
+        'Interpreter', 'latex', ...
+        'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
+        x_location = x_location + delta_x;
+    text_alpha{ii} = sprintf('$\\alpha^%d = %.4g$', ii, alpha(ii));
+    text(x_location, y_location, text_alpha(ii), ...
         'HorizontalAlignment', 'center', ...
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
     y_location = y_location + delta_y;
+    x_location = 1.5;
     for jj = 1:size(mu_neq,1)
         text_mu_neq{ii}{jj} = sprintf('$\\mu_{\\mathrm{neq}\\:%d}^{%d} = %.4g$', jj, ii, mu_neq(jj,ii));
         text(x_location, y_location, text_mu_neq{ii}{jj}, ...
