@@ -1,0 +1,6 @@
+function out = get_zeta_t(zeta_infty, lota, alpha_t)
+out = zeros(length(alpha_t), 1);
+for ii = 1:length(out)
+    out(ii) = zeta_infty * (1 - exp(-alpha_t(ii)/lota));
+end
+end

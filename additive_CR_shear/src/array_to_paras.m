@@ -16,13 +16,13 @@ ub = [];
 lb = [];
 for ii = 1:num_eq
     paras = [paras, mu_eq(ii), m_eq(ii), n_eq(ii)];
-    lb = [lb, 0, -3, -3];
-    ub = [ub, Inf, 3, 3];
+    lb = [lb, 0.0, -10, -10];
+    ub = [ub, Inf, 10, 10];
 end
 
 for ii = 1:num_neq
     paras = [paras, mu_neq(ii), m_neq(ii), n_neq(ii), eta_d(ii)];
-    lb = [lb, 0, -3, -3, 0.0];
-    ub = [ub, Inf, 3, 3, Inf];
+    lb = [lb, 0.0, -10, -10, 0.0];
+    ub = [ub, Inf, 10, 10, Inf];
 end
 end

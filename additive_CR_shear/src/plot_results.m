@@ -62,7 +62,7 @@ set(gcf, 'PaperPosition', [xMargin yMargin xSize ySize]);
 set(gcf, 'PaperOrientation', 'portrait');
 
 x_location = 8.7;
-y_location = 0.1;
+y_location = 185;
 delta_y = 15;
 % print R^2
 R_square = (get_R_square(P_exp_1, P_pre_1) + get_R_square(P_exp_2, P_pre_2) + get_R_square(P_exp_3, P_pre_3)) / 3.0;
@@ -76,7 +76,7 @@ text(x_location, y_location, text_R_square, ...
 % print NMAD
 y_location = y_location + delta_y;
 NMAD = (get_NMAD(P_pre_1, P_exp_1) + get_NMAD(P_pre_2, P_exp_2) + get_NMAD(P_pre_3, P_exp_3)) / 3.0;
-text_NMAD = sprintf('$\\mathrm{NMAD}=%.4g$', NMAD);
+text_NMAD = sprintf('$\\mathrm{NMAD}=%.4g\\%%$', NMAD);
 text(x_location, y_location, text_NMAD, ...
     'HorizontalAlignment', 'center', ...
     'VerticalAlignment', 'bottom', ...
@@ -110,7 +110,7 @@ text(x_location, y_location, text_MSD, ...
 
 x_location = 1.5;
 delta_x = 3.0;
-y_location = -60.0;
+y_location = -80.0;
 delta_y = -30.0;
 % print parameters
 text_mu_eq = cell(length(mu_eq), 1);
