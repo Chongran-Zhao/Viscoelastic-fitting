@@ -1,4 +1,4 @@
-function [mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, zeta_infty, iota] = paras_to_array(paras, num_eq, num_neq, Ft, P_exp, time)
+function [mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, r, beta] = paras_to_array(paras, num_eq, num_neq)
 mu_eq = [];
 m_eq  = [];
 n_eq = [];
@@ -19,6 +19,6 @@ for ii = 1:num_neq
     n_neq = [n_neq, paras(3*num_eq+4*(ii-1)+3)];
     eta_d = [eta_d, paras(3*num_eq+4*(ii-1)+4)];
 end
-zeta_infty = paras(end-1);
-iota = paras(end);
+r = paras(end-1);
+beta = paras(end);
 end

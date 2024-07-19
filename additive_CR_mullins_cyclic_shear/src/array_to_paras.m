@@ -1,4 +1,4 @@
-function [paras, num_eq, num_neq, lb, ub] = array_to_paras(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, zeta_infty, iota)
+function [paras, num_eq, num_neq, lb, ub] = array_to_paras(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, r, beta)
 if length(mu_eq) == length(m_eq) && length(m_eq) == length(n_eq)
     num_eq = length(mu_eq);
 else
@@ -25,7 +25,7 @@ for ii = 1:num_neq
     lb = [lb, 0, -10, -10, 0.0];
     ub = [ub, Inf, 10, 10, Inf];
 end
-paras = [paras, zeta_infty, iota];
-lb = [lb, 0.0, 0.0];
-ub = [ub, 1.0, Inf];
+paras = [paras, r, beta];
+lb = [lb, 1.0, 0.0];
+ub = [ub, Inf, Inf];
 end

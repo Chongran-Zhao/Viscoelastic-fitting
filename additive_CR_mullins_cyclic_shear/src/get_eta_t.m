@@ -1,4 +1,4 @@
-function out = get_alpha_t(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft, time)
+function out = get_eta_t(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft, time, r, beta)
 out = zeros(length(time), 1);
 Psi = zeros(length(time), 1);
 max_value = 0.0;
@@ -14,9 +14,7 @@ for ii = 1:length(time)
     end
     if Psi(ii) >= max_value
         max_value = Psi(ii);
-        out(ii) = max_value;
-    else
-        out(ii) = max_value;
     end
+    out(ii) = 1 - erf( (max_value - Psi(ii)) / beta ) / r;
 end
 end
