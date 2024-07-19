@@ -33,4 +33,4 @@ options = optimoptions('lsqnonlin', ...
 
 [paras, resnorm] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
 plot_result(paras, num_eq, num_neq, Ft, time, gamma, P_exp);
-print(gcf, '-djpeg', 'fig_cyclic_shear.jpg');
+print(gcf, '-djpeg', 'fig_cyclic_shear_part.jpg');
