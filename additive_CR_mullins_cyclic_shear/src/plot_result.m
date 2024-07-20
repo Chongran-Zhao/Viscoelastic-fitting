@@ -1,14 +1,14 @@
 function plot_result(paras, num_eq, num_neq, Ft, time, P_exp, mode)
-close all;
+% close all;
 gamma = zeros(length(time), 1);
 gamma(:) = Ft(1,2,:);
 % [mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, zeta_infty, iota] = paras_to_array(paras, num_eq, num_neq, Ft, P_exp, time);
-[mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, r, beta] = paras_to_array(paras, num_eq, num_neq);
+[mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, m, r, beta] = paras_to_array(paras, num_eq, num_neq);
 
-P_pre = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, r, beta, Ft, time);
+P_pre = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, m, r, beta, Ft, time);
 figure;
 ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
-plot(ax, gamma, P_exp, 'Color', '#ffa600', 'Marker', 'o', 'MarkerFaceColor', '#ffa600', 'MarkerSize', 10, 'LineStyle', '-', LineWidth=2.0);
+plot(ax, gamma, P_exp, 'Color', '#ffa600', 'Marker', 'o', 'MarkerFaceColor', '#ffa600', 'MarkerSize', 2, 'LineStyle', '-', LineWidth=2.0);
 hold(ax, 'on');
 plot(ax, gamma, P_pre, 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');
 xlabel(ax, 'Stretch', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
@@ -85,12 +85,11 @@ switch mode
         text_mu_eq = cell(length(mu_eq), 1);
         text_m_eq = cell(length(m_eq), 1);
         text_n_eq = cell(length(n_eq), 1);
-
-        x_location = 0.5;
-        y_location = -0.08;
+        y_location = -0.07;
         delta_x = 1.2;
-        delta_y = -0.015;
+        delta_y = -0.01;
         for ii = 1:length(mu_eq)
+            x_location = 0.5;
             text_mu_eq{ii} = sprintf('$\\mu_%d^{\\infty} = %.4g$', ii, mu_eq(ii));
             text(x_location, y_location, text_mu_eq{ii}, ...
                 'HorizontalAlignment', 'center', ...
@@ -113,16 +112,15 @@ switch mode
                 'VerticalAlignment', 'bottom', ...
                 'Interpreter', 'latex', ...
                 'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-            x_location = x_location + delta_x;
+            y_location = y_location + delta_y;
         end
 
         text_mu_neq = cell(length(mu_neq), length(eta_d));
         text_m_neq = cell(length(m_neq), length(eta_d));
         text_n_neq = cell(length(n_neq), length(eta_d));
         text_eta_d = cell(length(eta_d), 1);
-        x_location = 0.5;
-        y_location = y_location + delta_y;
         for ii = 1:length(eta_d)
+            x_location = 0.5;
             text_eta_d{ii} = sprintf('$\\eta_{\\mathrm{D}}^%d = %.4g$', ii, eta_d(ii));
             text(x_location, y_location, text_eta_d(ii), ...
                 'HorizontalAlignment', 'center', ...
@@ -156,9 +154,16 @@ switch mode
                 x_location = x_location + delta_x;
 
             end
+            y_location = y_location + delta_y;
         end
         x_location = 0.5;
-        y_location = y_location + delta_y;
+        text_m = sprintf('$m = %.4g$', m);
+        text(x_location, y_location, text_m, ...
+            'HorizontalAlignment', 'center', ...
+            'VerticalAlignment', 'bottom', ...
+            'Interpreter', 'latex', ...
+            'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
+        x_location = x_location + delta_x;
         text_r = sprintf('$r = %.4g$', r);
         text(x_location, y_location, text_r, ...
             'HorizontalAlignment', 'center', ...
@@ -219,11 +224,11 @@ switch mode
         text_m_eq = cell(length(m_eq), 1);
         text_n_eq = cell(length(n_eq), 1);
 
-        x_location = 1.5;
-        y_location = -0.08;
-        delta_x = 2.0;
-        delta_y = -0.015;
+        y_location = -0.075;
+        delta_x = 2.5;
+        delta_y = -0.012;
         for ii = 1:length(mu_eq)
+            x_location = 1.5;
             text_mu_eq{ii} = sprintf('$\\mu_%d^{\\infty} = %.4g$', ii, mu_eq(ii));
             text(x_location, y_location, text_mu_eq{ii}, ...
                 'HorizontalAlignment', 'center', ...
@@ -246,16 +251,15 @@ switch mode
                 'VerticalAlignment', 'bottom', ...
                 'Interpreter', 'latex', ...
                 'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-            x_location = x_location + delta_x;
+            y_location = y_location + delta_y;
         end
 
         text_mu_neq = cell(length(mu_neq), length(eta_d));
         text_m_neq = cell(length(m_neq), length(eta_d));
         text_n_neq = cell(length(n_neq), length(eta_d));
         text_eta_d = cell(length(eta_d), 1);
-        x_location = 1.5;
-        y_location = y_location + delta_y;
         for ii = 1:length(eta_d)
+            x_location = 1.5;
             text_eta_d{ii} = sprintf('$\\eta_{\\mathrm{D}}^%d = %.4g$', ii, eta_d(ii));
             text(x_location, y_location, text_eta_d(ii), ...
                 'HorizontalAlignment', 'center', ...
@@ -289,9 +293,16 @@ switch mode
                 x_location = x_location + delta_x;
 
             end
+            y_location = y_location + delta_y;
         end
         x_location = 1.5;
-        y_location = y_location + delta_y;
+        text_m = sprintf('$m = %.4g$', m);
+        text(x_location, y_location, text_m, ...
+            'HorizontalAlignment', 'center', ...
+            'VerticalAlignment', 'bottom', ...
+            'Interpreter', 'latex', ...
+            'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
+        x_location = x_location + delta_x;
         text_r = sprintf('$r = %.4g$', r);
         text(x_location, y_location, text_r, ...
             'HorizontalAlignment', 'center', ...
@@ -352,11 +363,11 @@ switch mode
         text_m_eq = cell(length(m_eq), 1);
         text_n_eq = cell(length(n_eq), 1);
 
-        x_location = 2.5;
         y_location = -0.12;
         delta_x = 4.0;
-        delta_y = -0.03;
+        delta_y = -0.02;
         for ii = 1:length(mu_eq)
+            x_location = 2.5;
             text_mu_eq{ii} = sprintf('$\\mu_%d^{\\infty} = %.4g$', ii, mu_eq(ii));
             text(x_location, y_location, text_mu_eq{ii}, ...
                 'HorizontalAlignment', 'center', ...
@@ -379,7 +390,7 @@ switch mode
                 'VerticalAlignment', 'bottom', ...
                 'Interpreter', 'latex', ...
                 'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-            x_location = x_location + delta_x;
+            y_location = y_location + delta_y;
         end
 
         text_mu_neq = cell(length(mu_neq), length(eta_d));
@@ -387,8 +398,8 @@ switch mode
         text_n_neq = cell(length(n_neq), length(eta_d));
         text_eta_d = cell(length(eta_d), 1);
         x_location = 2.5;
-        y_location = y_location + delta_y;
         for ii = 1:length(eta_d)
+            x_location = 2.5;
             text_eta_d{ii} = sprintf('$\\eta_{\\mathrm{D}}^%d = %.4g$', ii, eta_d(ii));
             text(x_location, y_location, text_eta_d(ii), ...
                 'HorizontalAlignment', 'center', ...
@@ -420,11 +431,17 @@ switch mode
                     'Interpreter', 'latex', ...
                     'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
                 x_location = x_location + delta_x;
-
             end
+            y_location = y_location + delta_y;
         end
         x_location = 2.5;
-        y_location = y_location + delta_y;
+        text_m = sprintf('$m = %.4g$', m);
+        text(x_location, y_location, text_m, ...
+            'HorizontalAlignment', 'center', ...
+            'VerticalAlignment', 'bottom', ...
+            'Interpreter', 'latex', ...
+            'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
+        x_location = x_location + delta_x;
         text_r = sprintf('$r = %.4g$', r);
         text(x_location, y_location, text_r, ...
             'HorizontalAlignment', 'center', ...
