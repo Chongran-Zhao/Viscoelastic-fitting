@@ -3,15 +3,15 @@ function plot_result(paras, num_eq, num_neq, Ft, time, P_exp, mode)
 gamma = zeros(length(time), 1);
 gamma(:) = Ft(1,2,:);
 % [mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, zeta_infty, iota] = paras_to_array(paras, num_eq, num_neq, Ft, P_exp, time);
-[mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, m, r, beta] = paras_to_array(paras, num_eq, num_neq);
+[mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha, m, r, beta] = paras_to_array(paras, num_eq, num_neq);
 
-P_pre = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, m, r, beta, Ft, time);
+P_pre = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha, m, r, beta, Ft, time);
 figure;
-ax = axes('Position', [0.15 0.4 0.8 0.5], 'Box', 'on');
-plot(ax, gamma(2:end-1), P_exp(2:end-1), 'Color', '#ffa600', 'Marker', 'o', 'MarkerFaceColor', '#ffa600', 'MarkerSize', 6, 'LineStyle', '-', LineWidth=2.0);
+ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
+plot(ax, gamma, P_exp, 'Color', '#ffa600', 'Marker', 'o', 'MarkerFaceColor', '#ffa600', 'MarkerSize', 2, 'LineStyle', '-', LineWidth=2.0);
 hold(ax, 'on');
-plot(ax, gamma(2:end-1), P_pre(2:end-1), 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');
-xlabel(ax, 'Shear Stretch', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
+plot(ax, gamma, P_pre, 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');
+xlabel(ax, 'Stretch', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
 ylabel(ax, 'Nominal stress', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
 set(ax, 'TickDir', 'out', ...
     'TickLength', [.02 .02], ...
@@ -317,7 +317,7 @@ switch mode
             'Interpreter', 'latex', ...
             'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
     case 3
-        x_location = 13.4;
+        x_location = 13.8;
         y_location = -0.05;
         delta_y = 0.015;
         % print R^2
@@ -340,14 +340,14 @@ switch mode
             'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
 
         % print quality of fit
-        % y_location = y_location + delta_y;
-        % chi = get_quality_of_fit(P_pre, P_exp);
-        % text_chi = sprintf('$\\chi^2 = %.4g$', chi);
-        % text(x_location, y_location, text_chi, ...
-        %     'HorizontalAlignment', 'center', ...
-        %     'VerticalAlignment', 'bottom', ...
-        %     'Interpreter', 'latex', ...
-        %     'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
+        y_location = y_location + delta_y;
+        chi = get_quality_of_fit(P_pre, P_exp);
+        text_chi = sprintf('$\\chi^2 = %.4g$', chi);
+        text(x_location, y_location, text_chi, ...
+            'HorizontalAlignment', 'center', ...
+            'VerticalAlignment', 'bottom', ...
+            'Interpreter', 'latex', ...
+            'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
         % print MSD
         y_location = y_location + delta_y;
         MSD = get_MSD(P_pre, P_exp);
@@ -364,10 +364,10 @@ switch mode
         text_n_eq = cell(length(n_eq), 1);
 
         y_location = -0.12;
-        delta_x = 5.0;
+        delta_x = 4.0;
         delta_y = -0.02;
         for ii = 1:length(mu_eq)
-            x_location = 2.0;
+            x_location = 2.5;
             text_mu_eq{ii} = sprintf('$\\mu_%d^{\\infty} = %.4g$', ii, mu_eq(ii));
             text(x_location, y_location, text_mu_eq{ii}, ...
                 'HorizontalAlignment', 'center', ...
@@ -397,8 +397,9 @@ switch mode
         text_m_neq = cell(length(m_neq), length(eta_d));
         text_n_neq = cell(length(n_neq), length(eta_d));
         text_eta_d = cell(length(eta_d), 1);
+        x_location = 2.5;
         for ii = 1:length(eta_d)
-            x_location = 2.0;
+            x_location = 2.5;
             text_eta_d{ii} = sprintf('$\\eta_{\\mathrm{D}}^%d = %.4g$', ii, eta_d(ii));
             text(x_location, y_location, text_eta_d(ii), ...
                 'HorizontalAlignment', 'center', ...
@@ -433,7 +434,7 @@ switch mode
             end
             y_location = y_location + delta_y;
         end
-        x_location = 2.0;
+        x_location = 2.5;
         text_m = sprintf('$m = %.4g$', m);
         text(x_location, y_location, text_m, ...
             'HorizontalAlignment', 'center', ...

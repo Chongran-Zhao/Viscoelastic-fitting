@@ -1,11 +1,7 @@
 function out = get_P_list(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft, time)
 out = zeros(size(Ft));
-for ii = 1:length(mu_eq)
-    out = out + get_P_iso_eq_list(mu_eq(ii), m_eq(ii), n_eq(ii), Ft);
-end
-for ii = 1:length(eta_d)
-    out = out + get_P_iso_neq_list(mu_neq, m_neq, n_neq, eta_d, Ft, time);
-end
+out = out + get_P_iso_eq_list(mu_eq, m_eq, n_eq, Ft);
+out = out + get_P_iso_neq_list(mu_neq, m_neq, n_neq, eta_d, Ft, time);
 % determine the pressure through incompressbility constrain
 for ii = 1:length(time)
     F = Ft(:,:,ii);
