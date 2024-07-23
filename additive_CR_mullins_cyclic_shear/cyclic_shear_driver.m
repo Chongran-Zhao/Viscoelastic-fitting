@@ -18,14 +18,14 @@ mu_eq = [1.0, 1.0];
 m_eq = [1.0, 1.0];
 n_eq = [1.0, 1.0];
 
-mu_neq = [1.0,1.0];
+mu_neq = [1.0, 1.0];
 m_neq = [1.0, 1.0];
 n_neq = [1.0, 1.0];
 eta_d = [1.0, 1.0];
 
 m = [0.0];
-r = [1000.0];
-beta = [0.1];
+r = [100.0];
+beta = [1.0];
 [paras0, num_eq, num_neq, lb, ub] = array_to_paras(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, m, r, beta);
 objectiveFunction = @(paras) objective(paras, Ft, P_exp, time, num_eq, num_neq);
 options = optimoptions('lsqnonlin', ...
