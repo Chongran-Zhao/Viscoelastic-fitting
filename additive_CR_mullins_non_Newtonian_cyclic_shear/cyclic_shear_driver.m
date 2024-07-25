@@ -1,7 +1,7 @@
 clc; clear; close all
 
 addpath("src");
-data = readmatrix('../smoothed_cyclic_shear_1.xlsx');
+data = readmatrix('../exp_data_var_sym_shear_raw/800.xlsx');
 time = data(:,1);
 P_exp = data(:,3);
 gamma = data(:,4);
@@ -25,7 +25,7 @@ n_neq = [1.0, 1.0];
 p = [1.0, 1.0];
 alpha = [1.0, 1.0];
 
-m = [0.0];
+m = [1.0];
 r = [1000.0];
 beta = [1.0];
 [paras0, num_eq, num_neq, lb, ub] = array_to_paras(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha, m, r, beta);
@@ -90,4 +90,4 @@ options = optimoptions('lsqnonlin', ...
     'PlotFcn', 'optimplotfval');
 [paras, ~] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
 plot_result(paras, num_eq, num_neq, Ft, time, P_exp, 3);
-print(gcf, '-djpeg', 'fig_cyclic_shear_3.jpg');
+print(gcf, '-djpeg', 'fig_var_sym_shear_800.jpg');

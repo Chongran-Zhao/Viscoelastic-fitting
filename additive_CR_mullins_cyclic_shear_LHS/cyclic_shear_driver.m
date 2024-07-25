@@ -27,27 +27,21 @@ options = optimoptions('lsqnonlin', ...
     'TolFun', 1e-10, ...
     'TolX', 1e-10, ...
     'Display', 'iter-detailed', ...
-    'MaxFunctionEvaluations', 5000,  ...
+    'MaxFunctionEvaluations', 1000,  ...
     'PlotFcn', 'optimplotfval');
 
-poolobj = gcp('nocreate');
+parpool('Processes')
 
-if isempty(poolobj)
-    disp('没有并行池，创建一个');
-    parpool; % 创建一个默认大小的并行池
-else
-    disp(['当前并行池的工作器数为：', num2str(poolobj.NumWorkers)]);
-end
 result = [];
 res_norm = [];
 parfor ii = 1:length(num_samples)
     samples(ii,:)
-    disp(['正在处理 ', num2str(ii), ' 号任务']);
+    fprintf('正在处理 %d 号任务\n', ii);
     [paras, resnorm] = lsqnonlin( objectiveFunction, samples(ii,:), lb, ub, options);
     result = [result; paras];
     res_norm = [res_norm, resnorm];
 end
-delete(gcp('nocreate'));
+delete(parpool);
 % [samples, lb, ub] = array_to_paras(num_eq, num_neq, num_mullins, num_samples);
 % plot_result(paras, num_eq, num_neq, Ft, time, P_exp, 3);
 % print(gcf, '-djpeg', 'fig_cyclic_shear_400.jpg');
