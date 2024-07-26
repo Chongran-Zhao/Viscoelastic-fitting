@@ -38,6 +38,18 @@ Ft_3(2,2,:) = 1.0;
 Ft_3(3,3,:) = 1.0;
 Ft_3(1,2,:) = gamma_3(:);
 
+% No.4 shear experimental data
+data_4 = readmatrix('../exp_data_shear/monotonic_shear_0d05.csv');
+time_4 = data_4(:,1);
+P_exp_4 = data_4(:,3);
+gamma_4 = data_4(:,4);
+
+Ft_4 = zeros(3,3,length(time_4));
+Ft_4(1,1,:) = 1.0;
+Ft_4(2,2,:) = 1.0;
+Ft_4(3,3,:) = 1.0;
+Ft_4(1,2,:) = gamma_4(:);
+
 % parameters
 mu_eq = [1.0];
 m_eq = [1.0];
@@ -46,8 +58,8 @@ n_eq = [1.0];
 mu_neq = [1.0];
 m_neq = [1.0];
 n_neq = [1.0];
-p = [0.0];
-alpha = [0.0];
+p = [-1.0];
+alpha = [-1.0];
 [paras0, num_eq, num_neq, lb, ub] = array_to_paras(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha);
 
 objectiveFunction = @(paras) multi_objective(paras, Ft_1, P_exp_1, time_1,...
@@ -55,14 +67,16 @@ objectiveFunction = @(paras) multi_objective(paras, Ft_1, P_exp_1, time_1,...
                                                     Ft_3, P_exp_3, time_3,...
                                                     num_eq, num_neq);
 options = optimoptions('lsqnonlin', ...
-    'Algorithm', 'interior-point', ...
-    'MaxIterations', 3000, ...
+    'Algorithm', 'trust-region-reflective', ...
+    'MaxIterations', 1000, ...
     'TolFun', 1e-10, ...
     'TolX', 1e-10, ...
+    'MaxFunctionEvaluations', 5000, ...
     'Display', 'iter-detailed');
 
 [paras, resnorm] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
-plot_results(paras, num_eq, num_neq, Ft_1, time_1, P_exp_1,...
+plot_results_validate(paras, num_eq, num_neq, Ft_1, time_1, P_exp_1,...
                                      Ft_2, time_2, P_exp_2,...
-                                     Ft_3, time_3, P_exp_3);
+                                     Ft_3, time_3, P_exp_3,...
+                                     Ft_4, time_4, P_exp_4);
 print(gcf, '-djpeg', 'fig_shear_sim.jpg');

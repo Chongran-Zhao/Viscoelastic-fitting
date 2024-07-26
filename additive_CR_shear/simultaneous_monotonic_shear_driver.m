@@ -38,6 +38,18 @@ Ft_3(2,2,:) = 1.0;
 Ft_3(3,3,:) = 1.0;
 Ft_3(1,2,:) = gamma_3(:);
 
+% No.4 shear experimental data
+data_4 = readmatrix('../exp_data_shear/monotonic_shear_0d05.csv');
+time_4 = data_4(:,1);
+P_exp_4 = data_4(:,3);
+gamma_4 = data_4(:,4);
+
+Ft_4 = zeros(3,3,length(time_4));
+Ft_4(1,1,:) = 1.0;
+Ft_4(2,2,:) = 1.0;
+Ft_4(3,3,:) = 1.0;
+Ft_4(1,2,:) = gamma_4(:);
+
 % parameters
 mu_eq = [1.0];
 m_eq = [1.0];
@@ -62,7 +74,8 @@ options = optimoptions('lsqnonlin', ...
     'PlotFcn', 'optimplotfval');
 
 [paras, resnorm] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
-plot_results(paras, num_eq, num_neq, Ft_1, time_1, P_exp_1,...
+plot_results_validate(paras, num_eq, num_neq, Ft_1, time_1, P_exp_1,...
                                      Ft_2, time_2, P_exp_2,...
-                                     Ft_3, time_3, P_exp_3);
+                                     Ft_3, time_3, P_exp_3,...
+                                     Ft_4, time_4, P_exp_4);
 print(gcf, '-djpeg', 'fig_shear_sim.jpg');

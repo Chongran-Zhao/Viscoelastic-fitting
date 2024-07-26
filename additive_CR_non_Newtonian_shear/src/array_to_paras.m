@@ -21,12 +21,8 @@ for ii = 1:num_eq
 end
 
 for ii = 1:num_neq
-    paras = [paras, mu_neq(ii), m_neq(ii), n_neq(ii)];
-    lb = [lb, 0.0, -10, -10];
-    ub = [ub, Inf, 10, 10];
+    paras = [paras, mu_neq(ii), m_neq(ii), n_neq(ii), p(ii), alpha(ii)];
+    lb = [lb, 0.0, -10, -10, -10, -10];
+    ub = [ub, Inf, 10, 10, 10, 10];
 end
-paras = [paras, p, alpha];
-lb = [lb, -10, -10];
-ub = [ub, 10, 10];
-
 end

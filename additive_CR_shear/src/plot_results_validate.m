@@ -1,18 +1,22 @@
-function plot_results(paras, num_eq, num_neq,...
+function plot_results_validate(paras, num_eq, num_neq,...
                             Ft_1, time_1, P_exp_1,...
                             Ft_2, time_2, P_exp_2,...
-                            Ft_3, time_3, P_exp_3)
+                            Ft_3, time_3, P_exp_3,...
+                            Ft_4, time_4, P_exp_4)
 
 [mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d] = paras_to_array(paras, num_eq, num_neq);
 gamma_1 = zeros(size(P_exp_1));
 gamma_2 = zeros(size(P_exp_2));
 gamma_3 = zeros(size(P_exp_3));
+gamma_4 = zeros(size(P_exp_4));
 gamma_1(:) = Ft_1(1,2,:);
 gamma_2(:) = Ft_2(1,2,:);
 gamma_3(:) = Ft_3(1,2,:);
+gamma_4(:) = Ft_4(1,2,:);
 P_pre_1 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_1, time_1);
 P_pre_2 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_2, time_2);
 P_pre_3 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_3, time_3);
+P_pre_4 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_4, time_4);
 
 figure;
 
@@ -28,6 +32,10 @@ hold(ax, 'on');
 plot(ax, gamma_3, P_exp_3, 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 8, 'LineStyle', 'none');
 hold(ax, 'on');
 plot(ax, gamma_3, P_pre_3, 'linewidth', 3.0, 'Color', '#bc5090', 'LineStyle', '-');
+
+plot(ax, gamma_4, P_exp_4, 'Color', 'r', 'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerSize', 8, 'LineStyle', 'none');
+hold(ax, 'on');
+plot(ax, gamma_4, P_pre_4, 'linewidth', 3.0, 'Color', 'r', 'LineStyle', '-');
 
 xlabel(ax, 'Shear', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
 ylabel(ax, 'Nominal stress', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
@@ -46,6 +54,7 @@ set(ax, 'TickDir', 'out', ...
 l = legend(ax, 'exp-1', 'fit-1',...
                'exp-0d1', 'fit-0d1',...
                'exp-0d01', 'fit-0d01',...
+               'exp-0d05', 'pre-0d05',...
                'location', 'northwest', 'Orientation', 'horizontal');
 set(l, 'interpreter', 'latex', 'fontsize', 25, 'box', 'off', 'FontWeight', 'bold', 'FontName', 'Helvetica', 'NumColumns', 2);
 
@@ -61,9 +70,17 @@ set(gcf, 'PaperSize', [X Y]);
 set(gcf, 'PaperPosition', [xMargin yMargin xSize ySize]);
 set(gcf, 'PaperOrientation', 'portrait');
 
-x_location = 8.7;
-y_location = 185;
+x_location = 10.2;
+y_location = 170;
 delta_y = 15;
+NMAD_pre = get_NMAD(P_pre_4, P_exp_4);
+text_NMAD_pre = sprintf('$\\mathrm{NMAD}_{\\mathrm{pre}}=%.4g\\%%$', NMAD_pre);
+text(x_location, y_location, text_NMAD_pre, ...
+    'HorizontalAlignment', 'center', ...
+    'VerticalAlignment', 'bottom', ...
+    'Interpreter', 'latex', ...
+    'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
+y_location = y_location + delta_y;
 % print R^2
 R_square = (get_R_square(P_exp_1, P_pre_1) + get_R_square(P_exp_2, P_pre_2) + get_R_square(P_exp_3, P_pre_3)) / 3.0;
 text_R_square = sprintf('$R^2=%.4g$', R_square);

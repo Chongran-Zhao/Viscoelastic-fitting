@@ -15,17 +15,16 @@ P_pre_2 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha,
 P_pre_3 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha, Ft_3, time_3);
 
 figure;
-
 ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
-plot(ax, gamma_1, P_exp_1, 'Color', '#003f5c', 'Marker', 'o', 'MarkerFaceColor', '#003f5c', 'MarkerSize', 12, 'LineStyle', 'none');
+plot(ax, gamma_1, P_exp_1, 'Color', '#003f5c', 'Marker', 'o', 'MarkerFaceColor', '#003f5c', 'MarkerSize', 8, 'LineStyle', 'none');
 hold(ax, 'on');
 plot(ax, gamma_1, P_pre_1, 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');
 hold(ax, 'on');
-plot(ax, gamma_2, P_exp_2, 'Color', '#58508d', 'Marker', 'o', 'MarkerFaceColor', '#58508d', 'MarkerSize', 12, 'LineStyle', 'none');
+plot(ax, gamma_2, P_exp_2, 'Color', '#58508d', 'Marker', 'o', 'MarkerFaceColor', '#58508d', 'MarkerSize', 8, 'LineStyle', 'none');
 hold(ax, 'on');
 plot(ax, gamma_2, P_pre_2, 'linewidth', 3.0, 'Color', '#58508d', 'LineStyle', '-');
 hold(ax, 'on');
-plot(ax, gamma_3, P_exp_3, 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 12, 'LineStyle', 'none');
+plot(ax, gamma_3, P_exp_3, 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 8, 'LineStyle', 'none');
 hold(ax, 'on');
 plot(ax, gamma_3, P_pre_3, 'linewidth', 3.0, 'Color', '#bc5090', 'LineStyle', '-');
 

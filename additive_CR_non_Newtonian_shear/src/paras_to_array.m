@@ -12,11 +12,12 @@ end
 mu_neq = [];
 m_neq = [];
 n_neq = [];
-eta_d = [];
+p = [];
+alpha = [];
 for ii = 1:num_neq
-    mu_neq = [mu_neq, paras(3*num_eq+4*(ii-1)+1)];
-    m_neq = [m_neq, paras(3*num_eq+4*(ii-1)+2)];
-    n_neq = [n_neq, paras(3*num_eq+4*(ii-1)+3)];
+    mu_neq = [mu_neq, paras(3*num_eq+5*(ii-1)+1)];
+    m_neq = [m_neq, paras(3*num_eq+5*(ii-1)+2)];
+    n_neq = [n_neq, paras(3*num_eq+5*(ii-1)+3)];
+    p = [p, paras(3*num_eq+5*(ii-1)+4)];
+    alpha = [alpha, paras(3*num_eq+5*(ii-1)+5)];
 end
-p = paras(end-1);
-alpha = paras(end);

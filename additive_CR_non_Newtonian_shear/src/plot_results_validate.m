@@ -1,35 +1,42 @@
-function plot_results(paras, num_eq, num_neq,...
+function plot_results_validate(paras, num_eq, num_neq,...
                             Ft_1, time_1, P_exp_1,...
                             Ft_2, time_2, P_exp_2,...
-                            Ft_3, time_3, P_exp_3)
+                            Ft_3, time_3, P_exp_3,...
+                            Ft_4, time_4, P_exp_4)
 
-[mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d] = paras_to_array(paras, num_eq, num_neq);
+[mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha] = paras_to_array(paras, num_eq, num_neq);
 gamma_1 = zeros(size(P_exp_1));
 gamma_2 = zeros(size(P_exp_2));
 gamma_3 = zeros(size(P_exp_3));
+gamma_4 = zeros(size(P_exp_4));
 gamma_1(:) = Ft_1(1,2,:);
 gamma_2(:) = Ft_2(1,2,:);
 gamma_3(:) = Ft_3(1,2,:);
-P_pre_1 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_1, time_1);
-P_pre_2 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_2, time_2);
-P_pre_3 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_3, time_3);
+gamma_4(:) = Ft_4(1,2,:);
+P_pre_1 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha, Ft_1, time_1);
+P_pre_2 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha, Ft_2, time_2);
+P_pre_3 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha, Ft_3, time_3);
+P_pre_4 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha, Ft_4, time_4);
 
 figure;
-
 ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
-plot(ax, gamma_1, P_exp_1, 'Color', '#003f5c', 'Marker', 'o', 'MarkerFaceColor', '#003f5c', 'MarkerSize', 8, 'LineStyle', 'none');
+plot(ax, gamma_1, P_exp_1, 'Color', '#003f5c', 'Marker', 'o', 'MarkerFaceColor', '#003f5c', 'MarkerSize', 8, 'LineStyle', '-');
 hold(ax, 'on');
 plot(ax, gamma_1, P_pre_1, 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');
 hold(ax, 'on');
-plot(ax, gamma_2, P_exp_2, 'Color', '#58508d', 'Marker', 'o', 'MarkerFaceColor', '#58508d', 'MarkerSize', 8, 'LineStyle', 'none');
+plot(ax, gamma_2, P_exp_2, 'Color', '#58508d', 'Marker', 'o', 'MarkerFaceColor', '#58508d', 'MarkerSize', 8, 'LineStyle', '-', 'LineWidth', 3);
 hold(ax, 'on');
 plot(ax, gamma_2, P_pre_2, 'linewidth', 3.0, 'Color', '#58508d', 'LineStyle', '-');
 hold(ax, 'on');
-plot(ax, gamma_3, P_exp_3, 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 8, 'LineStyle', 'none');
+plot(ax, gamma_3, P_exp_3, 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 8, 'LineStyle', '-', 'LineWidth', 3);
 hold(ax, 'on');
 plot(ax, gamma_3, P_pre_3, 'linewidth', 3.0, 'Color', '#bc5090', 'LineStyle', '-');
+hold(ax, 'on');
+plot(ax, gamma_4, P_exp_4, 'Color', 'r', 'Marker', 'o', 'MarkerFaceColor', 'r', 'MarkerSize', 8, 'LineStyle', '-', 'LineWidth', 3);
+hold(ax, 'on');
+plot(ax, gamma_4, P_pre_4, 'linewidth', 3.0, 'Color', 'r', 'LineStyle', '-');
 
-xlabel(ax, 'Shear', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
+xlabel(ax, 'Shear Stretch', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
 ylabel(ax, 'Nominal stress', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
 
 set(ax, 'TickDir', 'out', ...
@@ -46,6 +53,7 @@ set(ax, 'TickDir', 'out', ...
 l = legend(ax, 'exp-1', 'fit-1',...
                'exp-0d1', 'fit-0d1',...
                'exp-0d01', 'fit-0d01',...
+               'exp-0d05', 'pre-0d05',...
                'location', 'northwest', 'Orientation', 'horizontal');
 set(l, 'interpreter', 'latex', 'fontsize', 25, 'box', 'off', 'FontWeight', 'bold', 'FontName', 'Helvetica', 'NumColumns', 2);
 
@@ -61,9 +69,17 @@ set(gcf, 'PaperSize', [X Y]);
 set(gcf, 'PaperPosition', [xMargin yMargin xSize ySize]);
 set(gcf, 'PaperOrientation', 'portrait');
 
-x_location = 8.7;
-y_location = 185;
-delta_y = 15;
+x_location = 10.0;
+y_location = 0.1;
+delta_y = 11;
+NMAD_pre = get_NMAD(P_pre_4, P_exp_4);
+text_NMAD_pre = sprintf('$\\mathrm{NMAD}_{\\mathrm{pre}}=%.4g\\%%$', NMAD_pre);
+text(x_location, y_location, text_NMAD_pre, ...
+    'HorizontalAlignment', 'center', ...
+    'VerticalAlignment', 'bottom', ...
+    'Interpreter', 'latex', ...
+    'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
+y_location = y_location + delta_y;
 % print R^2
 R_square = (get_R_square(P_exp_1, P_pre_1) + get_R_square(P_exp_2, P_pre_2) + get_R_square(P_exp_3, P_pre_3)) / 3.0;
 text_R_square = sprintf('$R^2=%.4g$', R_square);
@@ -110,7 +126,7 @@ text(x_location, y_location, text_MSD, ...
 
 x_location = 1.5;
 delta_x = 3.0;
-y_location = -80.0;
+y_location = -60.0;
 delta_y = -30.0;
 % print parameters
 text_mu_eq = cell(length(mu_eq), 1);
@@ -145,19 +161,28 @@ end
 
 y_location = y_location + delta_y;
 
-text_mu_neq = cell(length(mu_neq), length(eta_d));
-text_m_neq = cell(length(m_neq), length(eta_d));
-text_n_neq = cell(length(n_neq), length(eta_d));
-text_eta = cell(length(eta_d), 1);
-for ii = 1:length(eta_d)
+text_mu_neq = cell(length(mu_neq), length(alpha));
+text_m_neq = cell(length(m_neq), length(alpha));
+text_n_neq = cell(length(n_neq), length(alpha));
+text_p = cell(length(p), 1);
+text_alpha = cell(length(alpha), 1);
+for ii = 1:length(p)
     x_location = 1.5;
-    text_eta{ii} = sprintf('$\\eta_{\\mathrm{D}}^%d = %.4g$', ii, eta_d(ii));
-    text(x_location, y_location, text_eta(ii), ...
+    text_p{ii} = sprintf('$p^%d = %.4g$', ii, p(ii));
+    text(x_location, y_location, text_p(ii), ...
+        'HorizontalAlignment', 'center', ...
+        'VerticalAlignment', 'bottom', ...
+        'Interpreter', 'latex', ...
+        'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
+        x_location = x_location + delta_x;
+    text_alpha{ii} = sprintf('$\\alpha^%d = %.4g$', ii, alpha(ii));
+    text(x_location, y_location, text_alpha(ii), ...
         'HorizontalAlignment', 'center', ...
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
     y_location = y_location + delta_y;
+    x_location = 1.5;
     for jj = 1:size(mu_neq,1)
         text_mu_neq{ii}{jj} = sprintf('$\\mu_{\\mathrm{neq}\\:%d}^{%d} = %.4g$', jj, ii, mu_neq(jj,ii));
         text(x_location, y_location, text_mu_neq{ii}{jj}, ...
