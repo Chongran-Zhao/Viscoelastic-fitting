@@ -1,6 +1,6 @@
 clc;clear;close all
 addpath("src");
-data = readmatrix('../exp_data_symmetric_shear_raw/400.xlsx');
+data = readmatrix('../exp_data_var_sym_shear_raw/400.xlsx');
 time = data(:,1);
 P_exp = data(:,3);
 gamma = data(:,4);

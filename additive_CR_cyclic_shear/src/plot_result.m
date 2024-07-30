@@ -6,9 +6,9 @@ P_pre = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft, 
 
 figure;
 ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
-plot(ax, gamma(1:10:end-1), P_exp(1:10:end-1), 'Color', '#ffa600', 'Marker', 'o', 'MarkerFaceColor', '#ffa600', 'MarkerSize', 10, 'LineStyle', '-', LineWidth=2.0);
+plot(ax, gamma, P_exp, 'Color', '#ffa600', 'Marker', 'o', 'MarkerFaceColor', '#ffa600', 'MarkerSize', 10, 'LineStyle', '-', LineWidth=2.0);
 hold(ax, 'on');
-plot(ax, gamma(1:10:end-1), P_pre(1:10:end-1), 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');
+plot(ax, gamma, P_pre, 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');
 xlabel(ax, 'Stretch', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
 ylabel(ax, 'Nominal stress', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
 set(ax, 'TickDir', 'out', ...

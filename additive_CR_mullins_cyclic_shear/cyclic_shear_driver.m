@@ -1,7 +1,7 @@
 clc; clear; close all
 
 addpath("src");
-data = readmatrix('../exp_data_cyclic_shear_raw/100.xlsx');
+data = readmatrix('../exp_data_cyclic_shear_raw/400.xlsx');
 time = data(:,1);
 P_exp = data(:,3);
 gamma = data(:,4);
@@ -38,4 +38,4 @@ options = optimoptions('lsqnonlin', ...
     'PlotFcn', 'optimplotfval');
 [paras, ~] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
 plot_result(paras, num_eq, num_neq, Ft, time, P_exp);
-print(gcf, '-djpeg', 'fig_cyclic_shear_100.jpg');
+print(gcf, '-djpeg', 'fig_cyclic_shear_400.jpg');
