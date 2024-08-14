@@ -1,7 +1,7 @@
 clc; clear; close all
 
 addpath("src");
-data = readmatrix('../exp_data_cyclic_shear_raw/400.xlsx');
+data = readmatrix('../exp_data_symmetric_shear_raw/400.xlsx');
 time = data(:,1);
 P_exp = data(:,3);
 gamma = data(:,4);
@@ -15,12 +15,12 @@ Ft(1,2,:) = gamma(:);
 
 % parameters
 mu_eq = [1.0, 1.0];
-m_eq = [1.0, 1.0];
-n_eq = [1.0, 1.0];
-
+m_eq = [1.0, -1.0];
+n_eq = [1.0, -1.0];
+                                                                                                                                                                                                                                                                                           
 mu_neq = [1.0, 1.0];
-m_neq = [1.0, 1.0];
-n_neq = [1.0, 1.0];
+m_neq = [1.0, -1.0];
+n_neq = [1.0, -1.0];
 eta_d = [1.0, 1.0];
 
 m = [1.0];
@@ -33,9 +33,9 @@ options = optimoptions('lsqnonlin', ...
     'MaxIterations', 1000, ...
     'TolFun', 1e-10, ...
     'TolX', 1e-10, ...
-    'Display', 'iter-detailed', ...
-    'MaxFunctionEvaluations', 5000,  ...
-    'PlotFcn', 'optimplotfval');
-[paras, ~] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
-plot_result(paras, num_eq, num_neq, Ft, time, P_exp);
-print(gcf, '-djpeg', 'fig_cyclic_shear_800.jpg');
+    'Display', 'iter', ...
+    'MaxFunctionEvaluations', 5000);
+[paras, ~] = lsqnonlin(objectiveFunction, paras0, lb, ub, options);
+paras_modified = paras;
+plot_result(paras_modified, num_eq, num_neq, Ft, time, P_exp);
+print(gcf, '-djpeg', 'fig_cyclic_shear_400.jpg');

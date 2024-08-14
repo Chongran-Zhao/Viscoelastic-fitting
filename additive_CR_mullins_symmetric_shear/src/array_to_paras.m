@@ -14,18 +14,26 @@ end
 paras = [];
 ub = [];
 lb = [];
-for ii = 1:num_eq
-    paras = [paras, mu_eq(ii), m_eq(ii), n_eq(ii)];
-    lb = [lb, 0, -10, -10];
-    ub = [ub, Inf, 10, 10];
-end
+% for ii = 1:num_eq
+paras = [paras, mu_eq(1), m_eq(1), n_eq(1)];
+lb = [lb, 0, -10, -10];
+ub = [ub, Inf, 10, 10];
+% end
 
-for ii = 1:num_neq
-    paras = [paras, mu_neq(ii), m_neq(ii), n_neq(ii), eta_d(ii)];
-    lb = [lb, 0, -10, -10, 0.0];
-    ub = [ub, Inf, 10, 10, Inf];
-end
+paras = [paras, mu_eq(2), m_eq(2), n_eq(2)];
+lb = [lb, 0, -10, -10];
+ub = [ub, Inf, 10, 10];
+
+% for ii = 1:num_neq
+paras = [paras, mu_neq(1), m_neq(1), n_neq(1), eta_d(1)];
+lb = [lb, 0, -10, -10, 0.0];
+ub = [ub, Inf, 10, 10, Inf];
+% end
+paras = [paras, mu_neq(2), m_neq(2), n_neq(2), eta_d(2)];
+lb = [lb, 0, -10, -10, 0.0];
+ub = [ub, Inf, 10, 10, Inf];
+
 paras = [paras, m, r, beta];
-lb = [lb, -Inf, -Inf, 0.0];
-ub = [ub, Inf, Inf, Inf];
+lb = [lb, 0.0, 1.0, 0.0];
+ub = [ub, Inf, Inf, 1];
 end

@@ -2,7 +2,7 @@ function plot_results(paras, num_eq, num_neq,...
                             Ft_1, time_1, P_exp_1,...
                             Ft_2, time_2, P_exp_2,...
                             Ft_3, time_3, P_exp_3)
-
+close all
 [mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d] = paras_to_array(paras, num_eq, num_neq);
 gamma_1 = zeros(size(P_exp_1));
 gamma_2 = zeros(size(P_exp_2));
@@ -13,21 +13,28 @@ gamma_3(:) = Ft_3(1,2,:);
 P_pre_1 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_1, time_1);
 P_pre_2 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_2, time_2);
 P_pre_3 = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d, Ft_3, time_3);
-
+out = zeros(size(Ft_1));
+for ii = 1:length(mu_eq)
+    out = out + get_P_iso_eq_list(mu_eq(ii), m_eq(ii), n_eq(ii), Ft_1);
+end
+P_eq = zeros(length(time_1), 1);
+P_eq(:) = out(1,2,:);
 figure;
 
 ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
-plot(ax, gamma_1, P_exp_1, 'Color', '#003f5c', 'Marker', 'o', 'MarkerFaceColor', '#003f5c', 'MarkerSize', 12, 'LineStyle', 'none');
+plot(ax, gamma_1, P_exp_1, 'Color', '#003f5c', 'Marker', 'o', 'MarkerFaceColor', '#003f5c', 'MarkerSize', 8, 'LineStyle', 'none');
 hold(ax, 'on');
 plot(ax, gamma_1, P_pre_1, 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');
 hold(ax, 'on');
-plot(ax, gamma_2, P_exp_2, 'Color', '#58508d', 'Marker', 'o', 'MarkerFaceColor', '#58508d', 'MarkerSize', 12, 'LineStyle', 'none');
+plot(ax, gamma_2, P_exp_2, 'Color', '#58508d', 'Marker', 'o', 'MarkerFaceColor', '#58508d', 'MarkerSize', 8, 'LineStyle', 'none');
 hold(ax, 'on');
 plot(ax, gamma_2, P_pre_2, 'linewidth', 3.0, 'Color', '#58508d', 'LineStyle', '-');
 hold(ax, 'on');
-plot(ax, gamma_3, P_exp_3, 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 12, 'LineStyle', 'none');
+plot(ax, gamma_3, P_exp_3, 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 8, 'LineStyle', 'none');
 hold(ax, 'on');
 plot(ax, gamma_3, P_pre_3, 'linewidth', 3.0, 'Color', '#bc5090', 'LineStyle', '-');
+hold on
+plot(ax, gamma_1, P_eq, 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');
 
 xlabel(ax, 'Shear', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
 ylabel(ax, 'Nominal stress', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
@@ -43,9 +50,9 @@ set(ax, 'TickDir', 'out', ...
     'LineWidth', 2, ...
     'FontSize', 25, 'FontWeight', 'bold');
 
-l = legend(ax, 'exp-1', 'fit-1',...
-               'exp-0d1', 'fit-0d1',...
-               'exp-0d01', 'fit-0d01',...
+l = legend(ax, 'exp-5', 'fit-5',...
+               'exp-2', 'fit-2',...
+               'exp-1', 'fit-1',...
                'location', 'northwest', 'Orientation', 'horizontal');
 set(l, 'interpreter', 'latex', 'fontsize', 25, 'box', 'off', 'FontWeight', 'bold', 'FontName', 'Helvetica', 'NumColumns', 2);
 
@@ -63,7 +70,7 @@ set(gcf, 'PaperOrientation', 'portrait');
 
 x_location = 8.7;
 y_location = 0.1;
-delta_y = 15;
+delta_y = 5;
 % print R^2
 R_square = (get_R_square(P_exp_1, P_pre_1) + get_R_square(P_exp_2, P_pre_2) + get_R_square(P_exp_3, P_pre_3)) / 3.0;
 text_R_square = sprintf('$R^2=%.4g$', R_square);
@@ -108,16 +115,16 @@ text(x_location, y_location, text_MSD, ...
     'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
 
 
-x_location = 1.5;
 delta_x = 3.0;
-y_location = -60.0;
-delta_y = -30.0;
+y_location = -20.0;
+delta_y = -5.0;
 % print parameters
 text_mu_eq = cell(length(mu_eq), 1);
 text_m_eq = cell(length(m_eq), 1);
 text_n_eq = cell(length(n_eq), 1);
 
 for ii = 1:length(mu_eq)
+    x_location = 1.5;
     text_mu_eq{ii} = sprintf('$\\mu_%d^{\\infty} = %.4g$', ii, mu_eq(ii));
     text(x_location, y_location, text_mu_eq{ii}, ...
         'HorizontalAlignment', 'center', ...
@@ -140,10 +147,8 @@ for ii = 1:length(mu_eq)
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-    x_location = x_location + delta_y;
+    y_location = y_location + delta_y;
 end
-
-y_location = y_location + delta_y;
 
 text_mu_neq = cell(length(mu_neq), length(eta_d));
 text_m_neq = cell(length(m_neq), length(eta_d));

@@ -1,7 +1,7 @@
 clc; clear; close all
 
 addpath("src");
-data = readmatrix('../exp_data_shear/monotonic_shear_0d1.csv');
+data = readmatrix('../exp_data_cyclic_shear_raw/400.xlsx');
 time = data(:,1);
 P_exp = data(:,3);
 gamma = data(:,4);
@@ -27,7 +27,7 @@ alpha_eq = [1.0];
 % alpha_neq = [alpha1_neq1, alpha2_neq1;
 %              alpha1_neq2, alpha2_neq2]
 
-eta = [1000.0];
+eta = [100.0];
 mu_neq = [1.0];
 alpha_neq = [1.0];
 

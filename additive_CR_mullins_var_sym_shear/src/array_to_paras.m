@@ -26,6 +26,6 @@ for ii = 1:num_neq
     ub = [ub, Inf, 10, 10, Inf];
 end
 paras = [paras, m, r, beta];
-lb = [lb, -Inf, -Inf, 0.0];
-ub = [ub, Inf, Inf, Inf];
+lb = [lb, 0.0, 1.0, 0.0];
+ub = [ub, Inf, Inf, 1.0];
 end

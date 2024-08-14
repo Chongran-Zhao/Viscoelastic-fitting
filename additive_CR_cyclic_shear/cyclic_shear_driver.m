@@ -1,10 +1,10 @@
 clc; clear; close all
 
 addpath("src");
-data = readmatrix('../exp_data_cyclic_shear_raw/400.xlsx');
+data = readmatrix('~/Downloads/shear_relaxation.xlsx');
 time = data(:,1);
-P_exp = data(:,3);
-gamma = data(:,4);
+P_exp = data(:,4);
+gamma = data(:,5);
 
 % Uniaxial tension experimental case
 Ft = zeros(3,3,length(time));
@@ -29,7 +29,7 @@ objectiveFunction = @(paras) objective(paras, Ft, P_exp, time, num_eq, num_neq);
 options = optimoptions('lsqnonlin', ...
     'Algorithm', 'trust-region-reflective', ...
     'MaxIterations', 500, ...
-    'MaxFunctionEvaluations', 10000, ...
+    'MaxFunctionEvaluations', 5000, ...
     'Display', 'iter-detailed');
 
 [paras, resnorm] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);

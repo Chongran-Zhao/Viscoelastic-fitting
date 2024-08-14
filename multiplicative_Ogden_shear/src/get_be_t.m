@@ -34,6 +34,7 @@ function out = get_be_t(time, mu_neq, alpha_neq, eta, Ft)
 %         tangent = get_res_tangent(eig_val_be, mu_neq, alpha_neq, dt, eta);
 % 
 %         delta_epsilon = bicgstab(tangent, -residual);
+%         delta_epsilon = tangent \ (-residual);
 %         eig_val_eps = eig_val_eps + delta_epsilon;
 %         error = norm(residual);
 %         eig_val_be = exp(2.0 .* eig_val_eps);
@@ -41,14 +42,21 @@ function out = get_be_t(time, mu_neq, alpha_neq, eta, Ft)
 %     end
 %     out(:,:,ii) = tensor_product(eig_vec_be, eig_val_be);
 % end
+% out = zeros(size(Ft));
+% out(:,:,1) = eye(3);
+% for ii = 2:length(time)
+%     dt = time(ii) - time(ii-1);
+%     be_old = out(:,:,ii-1);
+%     be_trail = Ft(:,:,ii) * get_Cv_inv(Ft(:,:,ii-1), out(:,:,ii-1)) * Ft(:,:,ii)';
+%     tau_old = get_tau_iso_neq(mu_neq, alpha_neq, be_old);
+%     out(:,:,ii) = be_trail - dt / eta .* (tau_old * be_trail);
+% end
 out = zeros(size(Ft));
 out(:,:,1) = eye(3);
 for ii = 2:length(time)
     dt = time(ii) - time(ii-1);
-    % be_old = out(:,:,ii-1);
     be_trail = Ft(:,:,ii) * get_Cv_inv(Ft(:,:,ii-1), out(:,:,ii-1)) * Ft(:,:,ii)';
-    tau_old = get_tau_iso_neq(mu_neq, alpha_neq, be_trail);
-    out(:,:,ii) = be_trail - dt / eta .* (tau_old * be_trail);
+    out(:,:,ii) = inv(inv(be_trail) + dt / eta .* eye(3));
 end
 end
 % EOF

@@ -51,7 +51,7 @@ alpha_eq = [1.0];
 % alpha_neq = [alpha1_neq1, alpha2_neq1;
 %              alpha1_neq2, alpha2_neq2]
 
-eta = [100.0, 10.0];
+eta = [10.0, 10.0];
 mu_neq = [1.0; 1.0];
 alpha_neq = [1.0; 1.0];
 
