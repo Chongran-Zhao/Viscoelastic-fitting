@@ -18,8 +18,8 @@ xi_neq = [1.0, 1.0, 1.0;
           1.0, 1.0, 1.0];
 C1 = [1.0, 1.0];
 C2 = [-0.01, -0.01];
-tau_hat = [1.0, 1.0];
-power_m = [1.0, 1.0];
+tau_hat = [1.1, 1.1];
+power_m = [2.1, 2.1];
 
 [paras0, lb, ub] = array_to_paras(xi_eq, xi_neq, C1, C2, tau_hat, power_m);
 

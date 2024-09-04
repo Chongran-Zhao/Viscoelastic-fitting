@@ -7,7 +7,7 @@ gamma(:) = Ft(1,2,:);
 
 P_pre = get_P_ij_list(1, 2, mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, p, alpha, m, r, beta, Ft, time);
 figure;
-ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
+ax = axes('Position', [0.15 0.4 0.8 0.5], 'Box', 'on');
 plot(ax, gamma, P_exp, 'Color', '#ffa600', 'Marker', 'o', 'MarkerFaceColor', '#ffa600', 'MarkerSize', 6, 'LineStyle', '-', LineWidth=2.0);
 hold(ax, 'on');
 plot(ax, gamma, P_pre, 'linewidth', 3.0, 'Color', '#003f5c', 'LineStyle', '-');

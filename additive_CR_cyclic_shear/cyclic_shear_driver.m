@@ -1,7 +1,7 @@
 clc; clear; close all
 
 addpath("src");
-data = readmatrix('~/Downloads/shear_relaxation.xlsx');
+data = readmatrix('../exp_data_shear_relaxation/shear_relaxation.xlsx');
 time = data(:,1);
 P_exp = data(:,4);
 gamma = data(:,5);
@@ -29,7 +29,7 @@ objectiveFunction = @(paras) objective(paras, Ft, P_exp, time, num_eq, num_neq);
 options = optimoptions('lsqnonlin', ...
     'Algorithm', 'trust-region-reflective', ...
     'MaxIterations', 500, ...
-    'MaxFunctionEvaluations', 5000, ...
+    'MaxFunctionEvaluations', 15000, ...
     'Display', 'iter-detailed');
 
 [paras, resnorm] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);

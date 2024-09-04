@@ -71,8 +71,8 @@ set(gcf, 'PaperPosition', [xMargin yMargin xSize ySize]);
 set(gcf, 'PaperOrientation', 'portrait');
 
 x_location = 10.2;
-y_location = 170;
-delta_y = 15;
+y_location = 0.0;
+delta_y = 0.011;
 NMAD_pre = get_NMAD(P_pre_4, P_exp_4);
 text_NMAD_pre = sprintf('$\\mathrm{NMAD}_{\\mathrm{pre}}=%.4g\\%%$', NMAD_pre);
 text(x_location, y_location, text_NMAD_pre, ...
@@ -125,16 +125,16 @@ text(x_location, y_location, text_MSD, ...
     'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
 
 
-x_location = 1.5;
 delta_x = 3.0;
-y_location = -80.0;
-delta_y = -30.0;
+y_location = -0.05;
+delta_y = -0.02;
 % print parameters
 text_mu_eq = cell(length(mu_eq), 1);
 text_m_eq = cell(length(m_eq), 1);
 text_n_eq = cell(length(n_eq), 1);
 
 for ii = 1:length(mu_eq)
+    x_location = 2.0;
     text_mu_eq{ii} = sprintf('$\\mu_%d^{\\infty} = %.4g$', ii, mu_eq(ii));
     text(x_location, y_location, text_mu_eq{ii}, ...
         'HorizontalAlignment', 'center', ...
@@ -157,17 +157,16 @@ for ii = 1:length(mu_eq)
         'VerticalAlignment', 'bottom', ...
         'Interpreter', 'latex', ...
         'FontSize', 25, 'FontWeight', 'bold', 'Color', 'k', 'FontName', 'Helvetica');
-    x_location = x_location + delta_y;
+    y_location = y_location + delta_y;
 end
 
-y_location = y_location + delta_y;
 
 text_mu_neq = cell(length(mu_neq), length(eta_d));
 text_m_neq = cell(length(m_neq), length(eta_d));
 text_n_neq = cell(length(n_neq), length(eta_d));
 text_eta = cell(length(eta_d), 1);
 for ii = 1:length(eta_d)
-    x_location = 1.5;
+    x_location = 2.0;
     text_eta{ii} = sprintf('$\\eta_{\\mathrm{D}}^%d = %.4g$', ii, eta_d(ii));
     text(x_location, y_location, text_eta(ii), ...
         'HorizontalAlignment', 'center', ...

@@ -27,13 +27,13 @@ alpha_eq = [1.0, 1.0, 1.0];
 % alpha_neq = [alpha1_neq1, alpha2_neq1;
 %              alpha1_neq2, alpha2_neq2]
 
-eta = [1.0, 1.0];
-mu_neq = [1.0; 1.0];
-alpha_neq = [1.0; 1.0];
+eta = [1.0];
+mu_neq = [1.0];
+alpha_neq = [1.0];
 
 m = [1.0];
 r = [100.0];
 beta = [10.0];
 
 
-out = get_be_t(time, mu_neq, alpha_neq, eta, Ft)
+out = get_be_t(time, mu_neq, alpha_neq, eta, Ft);
