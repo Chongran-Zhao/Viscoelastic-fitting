@@ -1,6 +1,0 @@
-function out = get_tau_iso_eig_val(xi_neq, lambda1, lambda2, lambda3)
-I1 = lambda1*lambda1 + lambda2*lambda2 + lambda3*lambda3;
-out = dPsi_dlambda_neq(xi_neq, I1, lambda1) * lambda1...
-      - dPsi_dlambda_neq(xi_neq, I1, lambda2) * lambda2 / 3.0...
-      - dPsi_dlambda_neq(xi_neq, I1, lambda3) * lambda3 / 3.0;
-end
