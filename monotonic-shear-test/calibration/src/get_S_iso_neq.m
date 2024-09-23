@@ -19,6 +19,7 @@ lambda3_bar = detFm0d33 * lambda3;
 S_bar = zeros(3,3);
 for ii = 1:length(mu)
     E_bar = get_gen_strain(m(ii), n(ii), lambda1_bar, lambda2_bar, lambda3_bar, N1, N2, N3);
+    Ev = get_Ev(mu(ii), m(ii), n(ii), eta(ii), F_old, F_new, dt);
     T_bar = get_gen_stress(mu(ii), E_bar - Ev);
     Q_bar = get_proj_Q(m(ii), n(ii), lambda1_bar, lambda2_bar, lambda3_bar, N1, N2, N3);
     S_bar = S_bar + contract(T_bar, Q_bar);

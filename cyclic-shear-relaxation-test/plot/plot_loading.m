@@ -15,6 +15,11 @@ data_3 = readmatrix('../exp-data/shear_relaxation_1.xlsx');
 time_3 = data_3(:,1);
 gamma_3 = data_3(:,5);
 
+% No.3 shear experimental data
+data_4 = readmatrix('../exp-data/shear_relaxation_0d1.xlsx');
+time_4 = data_4(:,1);
+gamma_4 = data_4(:,5);
+
 figure;
 ax = axes('Position', [0.1 0.4 0.8 0.5], 'Box', 'on');
 plot(ax, time_1, gamma_1, 'Color', '#003f5c', 'Marker', 'o', 'MarkerFaceColor', '#003f5c', 'MarkerSize', 8);
@@ -22,6 +27,8 @@ hold(ax, 'on');
 plot(ax, time_2, gamma_2, 'Color', '#58508d', 'Marker', 'o', 'MarkerFaceColor', '#58508d', 'MarkerSize', 8);
 hold(ax, 'on');
 plot(ax, time_3, gamma_3, 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 8);
+hold(ax, 'on');
+plot(ax, time_4, gamma_4, 'Color', 'b', 'Marker', 'o', 'MarkerFaceColor', 'b', 'MarkerSize', 8);
 
 xlabel(ax, 'Time (s)', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
 ylabel(ax, 'Shear Stretch', 'interpreter', 'latex', 'FontSize', 30, 'FontWeight', 'bold', 'FontName', 'Helvetica');
@@ -40,6 +47,7 @@ set(ax, 'TickDir', 'out', ...
 l = legend(ax, '$\dot{\gamma} = 5\:\mathrm{s}^{-1}$',...
                '$\dot{\gamma} = 2\:\mathrm{s}^{-1}$' ,...
                '$\dot{\gamma} = 1\:\mathrm{s}^{-1}$',...
+               '$\dot{\gamma} = 0.1\:\mathrm{s}^{-1}$',...
                'location', 'northwest', 'Orientation', 'horizontal');
 set(l, 'interpreter', 'latex', 'fontsize', 35, 'box', 'off', 'FontWeight', 'bold', 'FontName', 'Helvetica', 'NumColumns', 1);
 

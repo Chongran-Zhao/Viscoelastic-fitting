@@ -15,11 +15,19 @@ data_3 = readmatrix('../exp-data/monotonic_shear_0d01.xlsx');
 P_exp_3 = data_3(:,3);
 gamma_3 = data_3(:,4);
 
+% No.4 shear experimental data
+data_4 = readmatrix('../exp-data/monotonic_shear_0d05.xlsx');
+time_4 = data_4(:,1);
+P_exp_4 = data_4(:,5);
+gamma_4 = data_4(:,4);
+
 figure;
 ax = axes('Position', [0.12 0.4 0.8 0.5], 'Box', 'on');
 plot(ax, gamma_1, P_exp_1, 'Color', '#003f5c', 'Marker', 'o', 'MarkerFaceColor', '#003f5c', 'MarkerSize', 8);
 hold(ax, 'on');
 plot(ax, gamma_2, P_exp_2, 'Color', '#58508d', 'Marker', 'o', 'MarkerFaceColor', '#58508d', 'MarkerSize', 8);
+hold(ax, 'on');
+plot(ax, gamma_4, P_exp_4, 'Color', 'b', 'Marker', 'o', 'MarkerFaceColor', 'b', 'MarkerSize', 8);
 hold(ax, 'on');
 plot(ax, gamma_3, P_exp_3, 'Color', '#bc5090', 'Marker', 'o', 'MarkerFaceColor', '#bc5090', 'MarkerSize', 8);
 
@@ -39,6 +47,7 @@ set(ax, 'TickDir', 'out', ...
 
 l = legend(ax, '$\dot{\gamma} = 1\:\mathrm{s}^{-1}$',...
                '$\dot{\gamma} = 0.1\:\mathrm{s}^{-1}$',...
+               '$\dot{\gamma} = 0.05\:\mathrm{s}^{-1}$',...
                '$\dot{\gamma} = 0.01\:\mathrm{s}^{-1}$',...
                'location', 'northwest', 'Orientation', 'horizontal');
 set(l, 'interpreter', 'latex', 'fontsize', 35, 'box', 'off', 'FontWeight', 'bold', 'FontName', 'Helvetica', 'NumColumns', 1);

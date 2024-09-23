@@ -39,16 +39,16 @@ Ft_3(3,3,:) = 1.0;
 Ft_3(1,2,:) = gamma_3(:);
 
 % No.4 shear experimental data
-% data_4 = readmatrix('../exp_data_shear/monotonic_shear_0d05.csv');
-% time_4 = data_4(:,1);
-% P_exp_4 = data_4(:,5);
-% gamma_4 = data_4(:,2);
+data_4 = readmatrix('../exp-data/monotonic_shear_0d05.xlsx');
+time_4 = data_4(:,1);
+P_exp_4 = data_4(:,5);
+gamma_4 = data_4(:,4);
 
-% Ft_4 = zeros(3,3,length(time_4));
-% Ft_4(1,1,:) = 1.0;
-% Ft_4(2,2,:) = 1.0;
-% Ft_4(3,3,:) = 1.0;
-% Ft_4(1,2,:) = gamma_4(:);
+Ft_4 = zeros(3,3,length(time_4));
+Ft_4(1,1,:) = 1.0;
+Ft_4(2,2,:) = 1.0;
+Ft_4(3,3,:) = 1.0;
+Ft_4(1,2,:) = gamma_4(:);
 
 % parameters
 mu_eq = [1.0];
@@ -62,13 +62,13 @@ eta_d = [1.0];
 
 [paras0, num_eq, num_neq, lb, ub] = array_to_paras(mu_eq, m_eq, n_eq, mu_neq, m_neq, n_neq, eta_d);
 
-objectiveFunction = @(paras) objective(paras, Ft_1, P_exp_1, time_1,...
-                                              Ft_3, P_exp_3, time_3,...
+objectiveFunction = @(paras) objective(paras, Ft_2, P_exp_2, time_2,...
+                                              Ft_4, P_exp_4, time_4,...
                                               num_eq, num_neq);
 options = optimoptions('lsqnonlin', ...
     'Algorithm', 'trust-region-reflective', ...
     'MaxIterations', 1000, ...
-    'MaxFunctionEvaluations', 1000, ...
+    'MaxFunctionEvaluations', 3000, ...
     'TolFun', 1e-10, ...
     'TolX', 1e-10, ...
     'Display', 'iter-detailed', ...
@@ -76,8 +76,11 @@ options = optimoptions('lsqnonlin', ...
 
 [paras, resnorm] = lsqnonlin( objectiveFunction, paras0, lb, ub, options);
 
-validate_results(paras, num_eq, num_neq, Ft_1, time_1, P_exp_1,...
-                                     Ft_2, time_2, P_exp_2,...
-                                     Ft_3, time_3, P_exp_3);
+plot_results(paras, num_eq, num_neq, Ft_2, time_2, P_exp_2,...
+                                     Ft_4, time_4, P_exp_4);
 
-print(gcf, '-djpeg', 'validation.jpg');
+print(gcf, '-djpeg', 'monotonic_shear_calibration.jpg');
+
+validation(paras, num_eq, num_neq, Ft_3, time_3, P_exp_3);
+
+print(gcf, '-djpeg', 'monotonic_shear_validation.jpg');

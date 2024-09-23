@@ -1,7 +1,5 @@
-function out = get_Ev(mu_neq, m_neq, n_neq, eta, F_old, F_new, dt)
-C_old = F_old' * F_old;
-
-C_new = F_new' * F_new;
+function out = get_Ev_t(mu_neq, m_neq, n_neq, eta_d, Ft, time)
+out = zeros(size(Ft));
 for ii = 1:length(time)
     if ii == 1
         dt = time(1);
